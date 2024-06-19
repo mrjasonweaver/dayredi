@@ -33,22 +33,47 @@ const Task: React.FC<TaskProps> = ({ lists, setLists, currentList, task }) => {
         setTitle(event.target.value);
     };
 
+    /**
+     * Utility to update the current task's completed status for the currentList.
+     * @param task The task to update.
+     * @returns The updated task.
+     */
+    const updateTaskCompletedStatus = (task: Task) => {
+        return {
+            ...task,
+            completed: !task.completed,
+        }
+    }
+
+    /**
+     * Update the prevLists object with the current tasks list updated task's completed status.
+     * @returns The updated prevLists object.
+     */
+    const updateLists = (prevLists: ListWithIndexSignature) => {
+        // Update the current task's completed status.
+        const updatedTask: Task = updateTaskCompletedStatus(task);
+
+        // Update the currentList's tasks with the updated task.
+        const updatedTasks = {
+            ...prevLists[currentList].tasks,
+            [taskId]: updatedTask,
+        };
+
+        // Update the currentList's tasks with the sorted tasks.
+        return {
+            ...prevLists,
+            [currentList]: {
+                ...prevLists[currentList],
+                tasks: updatedTasks,
+            },
+        };
+
+    }
+
+
     const handleCheckboxChange = () => {
         setLists((prevLists: ListWithIndexSignature) => {
-            // Update the current task's completed status for the currentList.
-            return {
-                ...prevLists,
-                [currentList]: {
-                    ...prevLists[currentList],
-                    tasks: {
-                        ...prevLists[currentList].tasks,
-                        [taskId]: {
-                            ...prevLists[currentList].tasks[taskId],
-                            completed: !completed,
-                        },
-                    },
-                },
-            };
+            return updateLists(prevLists);
         });
     };
 
