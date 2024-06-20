@@ -1,69 +1,51 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { List } from '../data-models/interfaces';
 
 interface AddTaskProps {
-    onAdd: (title: string) => void;
-}
-
-interface Task {
-    id: string;
-    title: string;
-    completed: boolean;
-}
-
-interface ListWithIndexSignature {
-    [key: string]: {
-        tasks: {
-            [key: string]: Task;
-        };
-        completed: boolean;
-        title: string;
-    };
-}
-
-interface AddTaskProps {
-    lists: ListWithIndexSignature;
-    setLists: React.Dispatch<React.SetStateAction<ListWithIndexSignature>>;
+    setLists: React.Dispatch<React.SetStateAction<List[]>>;
     currentList: string;
 }
 
 const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
-    const [title, setTitle] = useState('');
+    const [name, setName] = useState('');
 
     const onAdd = (title: string) => {
         const newTaskId = uuidv4();
-        setLists((prevLists: ListWithIndexSignature) => {
-            return {
-                ...prevLists,
-                [currentList]: {
-                    ...prevLists[currentList],
-                    tasks: {
-                        ...prevLists[currentList].tasks,
-                        [newTaskId]: {
-                            id: newTaskId,
-                            title,
-                            completed: false,
-                        },
-                    },
-                },
-            };
+        setLists((prevLists: List[]) => {
+            return prevLists.map((list: List) => {
+                if (list.id === currentList) {
+                    return {
+                        ...list,
+                        tasks: [
+                            ...list.tasks,
+                            {
+                                id: newTaskId,
+                                name: title,
+                                completed: false,
+                            },
+                        ],
+                    };
+                }
+                return list;
+            });
         });
     }
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setTitle(event.target.value);
+        setName(event.target.value);
     };
 
     const handleAddSubmit = () => {
-        if (title.trim() !== '') {
-            onAdd(title);
-            setTitle('');
+        if (name.trim() !== '') {
+            onAdd(name);
+            setName('');
         }
     };
 
     return (
         <div>
-            <input type="text" id="task-title" value={title} onChange={handleInputChange} />
+            <input type="text" id="task-title" value={name} onChange={handleInputChange} />
             <button onClick={handleAddSubmit}>Add Task</button>
         </div>
     );

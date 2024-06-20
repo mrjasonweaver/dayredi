@@ -1,23 +1,22 @@
 import React from 'react';
-import Task from './Task';
-
-interface ListWithIndexSignature extends Array<string> {}
+import SingleTask from './SingleTask';
+import { List, Task } from '../data-models/interfaces';
 
 interface TaskListProps {
-    lists: ListWithIndexSignature;
-    setLists: React.Dispatch<React.SetStateAction<ListWithIndexSignature>>;
+    lists: List[];
+    setLists: React.Dispatch<React.SetStateAction<List[]>>;
     currentList: string;
 }
 
 const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => {
 
-    const tasks = Object.values(lists[currentList]['tasks']);
+    const tasks = lists.find((list: List) => list.id === currentList)?.tasks || [];
 
-    const incompleteTasks = tasks.filter((task) => {
+    const incompleteTasks = tasks.filter((task: Task) => {
         return task.completed === false
     });
 
-    const completedTasks = tasks.filter((task) => {
+    const completedTasks = tasks.filter((task: Task) => {
         return task.completed === true
     });
 
@@ -27,7 +26,7 @@ const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => 
             <div className="list-wrap">
                 {incompleteTasks?.map((task, index) => {
                     return (
-                        <Task
+                        <SingleTask
                             key={index}
                             lists={lists}
                             setLists={setLists}
@@ -42,7 +41,7 @@ const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => 
             <div className="list-wrap">
                 {completedTasks?.reverse().map((task, index) => {
                     return (
-                        <Task
+                        <SingleTask
                             key={index}
                             lists={lists}
                             setLists={setLists}
