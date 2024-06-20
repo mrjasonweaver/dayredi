@@ -30,6 +30,7 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
                                 id: newTaskId,
                                 name: title,
                                 completed: false,
+                                timestamp: new Date().getTime(),
                             },
                         ],
                     };

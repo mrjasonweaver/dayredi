@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import './App.css'
 import TaskList from './components/TaskList'
-import AddTask from './components/AddTask';
 import { List, Task } from './data-models/interfaces';
 
 const initialListId: string = 'list1';
@@ -12,6 +11,7 @@ const initialTasks: Task[] = [
     id: initialTaskId,
     name: 'My fist task.',
     completed: false,
+    timestamp: new Date().getTime(),
   },
 ];
 
@@ -22,6 +22,7 @@ const initialList: List[] = [
     tasks: initialTasks,
   },
 ];
+
 
 // Get the inital List from local storage if it exists.
 const localList: List[] = JSON.parse(localStorage.getItem('list-timer-app') || '[]');
@@ -37,8 +38,11 @@ function App() {
     <>
       <h1>{title}</h1>
       <div className="card">
-        <AddTask setLists={setLists} currentList={currentList} />
-        <TaskList lists={lists} setLists={setLists} currentList={currentList} />
+        <TaskList
+          lists={lists}
+          setLists={setLists}
+          currentList={currentList}
+        />
         <p>
           {description}
         </p>
@@ -47,4 +51,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

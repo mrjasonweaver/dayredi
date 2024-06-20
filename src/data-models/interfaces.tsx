@@ -8,6 +8,7 @@ interface Task {
     id: string;
     name: string;
     completed: boolean;
+    timestamp: number;
 }
 
 export type { List, Task };

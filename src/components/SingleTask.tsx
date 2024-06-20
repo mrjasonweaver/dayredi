@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { List, Task } from '../data-models/interfaces';
+import { formatDistance } from "date-fns";
 
 
 interface TaskProps {
@@ -35,6 +36,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
         return {
             ...task,
             completed: !task.completed,
+            timestamp: new Date().getTime(),
         }
     }
 
@@ -125,6 +127,39 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
         }
     };
 
+    /**
+     * Delete the current task from the currentList.
+     * @returns void
+     */
+    const deleteTask = () => {
+        setLists((prevLists: List[]) => {
+            const newLists = prevLists.map((list: List) => {
+                if (list.id === currentList) {
+                    return {
+                        ...list,
+                        tasks: list.tasks.filter((task: Task) => {
+                            return task.id !== taskId;
+                        }),
+                    };
+                }
+                return list;
+            });
+
+            // Update the local storage.
+            localStorage.setItem('list-timer-app', JSON.stringify(newLists));
+
+            return newLists;
+        });
+    }
+
+    /**
+     * Handle the delete task event.
+     * @returns void
+     */
+    const handleDeleteTask = () => {
+        deleteTask();
+    }
+
     return (
         <div>
             <input type="text" value={currentName || name} placeholder="Enter a task description." id={taskId} onChange={handleTitleChange} onKeyDownCapture={handleNameSubmit} />
@@ -132,6 +167,8 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
                 <input type="checkbox" name={taskId} checked={completed} onChange={handleCheckboxChange} />
                 Completed
             </label>
+            <span>{formatDistance(task.timestamp, new Date(), { addSuffix: true, includeSeconds: true })}</span>
+            <button onClick={handleDeleteTask}>Delete</button>
         </div>
     );
 };
