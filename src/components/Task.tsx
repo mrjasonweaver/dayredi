@@ -23,14 +23,15 @@ interface TaskProps {
     task: Task;
 }
 
-const Task: React.FC<TaskProps> = ({ lists, setLists, currentList, task }) => {
-    const [title, setTitle] = useState(task.title);
+const Task: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
+    const [currentTitle, setCurrentTitle] = useState('');
 
-    const taskId = task.id;
-    const completed = task.completed;
+    const taskId: string = task.id;
+    const completed: boolean = task.completed;
+    const title: string = task.title;
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setTitle(event.target.value);
+        setCurrentTitle(event.target.value);
     };
 
     /**
@@ -49,7 +50,7 @@ const Task: React.FC<TaskProps> = ({ lists, setLists, currentList, task }) => {
      * Update the prevLists object with the current tasks list updated task's completed status.
      * @returns The updated prevLists object.
      */
-    const updateLists = (prevLists: ListWithIndexSignature) => {
+    const updateLists = (prevLists: ListWithIndexSignature, title: string) => {
         // Update the current task's completed status.
         const updatedTask: Task = updateTaskCompletedStatus(task);
 
@@ -71,9 +72,9 @@ const Task: React.FC<TaskProps> = ({ lists, setLists, currentList, task }) => {
     }
 
 
-    const handleCheckboxChange = () => {
+    const handleCheckboxChange = (title: string) => {
         setLists((prevLists: ListWithIndexSignature) => {
-            return updateLists(prevLists);
+            return updateLists(prevLists, title);
         });
     };
 
@@ -92,9 +93,9 @@ const Task: React.FC<TaskProps> = ({ lists, setLists, currentList, task }) => {
 
     return (
         <div>
-            <input type="text" value={title} placeholder="Enter a task description." onChange={handleTitleChange} onSubmit={handleTitleSubmit} />
+            <input type="text" value={currentTitle || title} placeholder="Enter a task description." id={taskId} onChange={handleTitleChange} onSubmit={handleTitleSubmit} />
             <label>
-                <input type="checkbox" checked={completed} onChange={handleCheckboxChange} />
+                <input type="checkbox" name={taskId} checked={completed} onChange={() => handleCheckboxChange(task.title)} />
                 Completed
             </label>
         </div>

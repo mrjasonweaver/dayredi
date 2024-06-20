@@ -63,7 +63,7 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
 
     return (
         <div>
-            <input type="text" value={title} onChange={handleInputChange} />
+            <input type="text" id="task-title" value={title} onChange={handleInputChange} />
             <button onClick={handleAddSubmit}>Add Task</button>
         </div>
     );
