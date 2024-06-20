@@ -20,7 +20,7 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
     const onAdd = (title: string) => {
         const newTaskId = uuidv4();
         setLists((prevLists: List[]) => {
-            return prevLists.map((list: List) => {
+            const newLists = prevLists.map((list: List) => {
                 if (list.id === currentList) {
                     return {
                         ...list,
@@ -36,6 +36,11 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
                 }
                 return list;
             });
+
+            // Save the new lists to local storage.
+            localStorage.setItem('list-timer-app', JSON.stringify(newLists));
+
+            return newLists;
         });
     }
 

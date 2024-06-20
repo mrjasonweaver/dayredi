@@ -23,8 +23,11 @@ const initialList: List[] = [
   },
 ];
 
+// Get the inital List from local storage if it exists.
+const localList: List[] = JSON.parse(localStorage.getItem('list-timer-app') || '[]');
+
 function App() {
-  const [lists, setLists] = useState<List[]>(initialList);
+  const [lists, setLists] = useState<List[]>(localList.length ? localList : initialList);
   const [currentList, setCurrentList] = useState<string>(initialListId);
   const title = 'List Timer';
   const description = 'A productivity app for time blocking tasks';

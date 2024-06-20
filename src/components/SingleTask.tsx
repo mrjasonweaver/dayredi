@@ -48,7 +48,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
         const updatedTask: Task = updateTaskCompletedStatus(task);
     
         // Update the currentList's tasks with the updated task.
-        return prevLists.map((list: List) => {
+        const newList = prevLists.map((list: List) => {
             if (list.id === currentList) {
                 return {
                     ...list,
@@ -62,6 +62,11 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
             }
             return list;
         });
+
+        // Update the local storage.
+        localStorage.setItem('list-timer-app', JSON.stringify(newList));
+
+        return newList;
     
     }
 
@@ -82,7 +87,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
      */
     const updateTaskName = () => {
         setLists((prevLists: List[]) => {
-            return prevLists.map((list: List) => {
+            const newLists = prevLists.map((list: List) => {
                 if (list.id === currentList) {
                     return {
                         ...list,
@@ -99,6 +104,11 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
                 }
                 return list;
             });
+
+            // Update the local storage.
+            localStorage.setItem('list-timer-app', JSON.stringify(newLists));
+
+            return newLists;
         });
     }
 
