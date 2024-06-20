@@ -4,9 +4,12 @@ import TaskList from './components/TaskList'
 import AddTask from './components/AddTask';
 import { List, Task } from './data-models/interfaces';
 
-const initialTask: Task[] = [
+const initialListId: string = 'list1';
+const initialTaskId: string = 'task1';
+
+const initialTasks: Task[] = [
   {
-    id: '0',
+    id: initialTaskId,
     name: 'My fist task.',
     completed: false,
   },
@@ -14,15 +17,15 @@ const initialTask: Task[] = [
 
 const initialList: List[] = [
   {
-    id: '0',
+    id: initialListId,
     name: 'My fist List.',
-    tasks: initialTask,
+    tasks: initialTasks,
   },
 ];
 
 function App() {
   const [lists, setLists] = useState<List[]>(initialList);
-  const [currentList, setCurrentList] = useState<string>('0');
+  const [currentList, setCurrentList] = useState<string>(initialListId);
   const title = 'List Timer';
   const description = 'A productivity app for time blocking tasks';
 

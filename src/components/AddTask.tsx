@@ -7,6 +7,13 @@ interface AddTaskProps {
     currentList: string;
 }
 
+/**
+ * AddTask component to add a new task to the current list.
+ * @param setLists The setLists function to update the lists state.
+ * @param currentList The current list id.
+ * @returns The AddTask component.
+ * @return {JSX.Element}
+ */
 const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
     const [name, setName] = useState('');
 
@@ -32,10 +39,19 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
         });
     }
 
+    /**
+     * Handle the input change event.
+     * @param event The input change event.
+     * @return {void}
+     */
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value);
     };
 
+    /**
+     * Handle the add submit event.
+     * @return {void}
+     */
     const handleAddSubmit = () => {
         if (name.trim() !== '') {
             onAdd(name);
@@ -43,9 +59,20 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
         }
     };
 
+    /**
+     * Handle the add on enter event.
+     * @param event The key down event.
+     * @return {void}
+     */
+    const handleAddOnEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            handleAddSubmit();
+        }
+    };
+
     return (
         <div>
-            <input type="text" id="task-title" value={name} onChange={handleInputChange} />
+            <input type="text" id="task-title" value={name} onChange={handleInputChange} onKeyDownCapture={handleAddOnEnter} />
             <button onClick={handleAddSubmit}>Add Task</button>
         </div>
     );

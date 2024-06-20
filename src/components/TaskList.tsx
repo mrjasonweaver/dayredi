@@ -10,12 +10,15 @@ interface TaskListProps {
 
 const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => {
 
+    // Get the current list's tasks.
     const tasks = lists.find((list: List) => list.id === currentList)?.tasks || [];
 
+    // Get the incomplete tasks.
     const incompleteTasks = tasks.filter((task: Task) => {
         return task.completed === false
     });
 
+    // Get the completed tasks.
     const completedTasks = tasks.filter((task: Task) => {
         return task.completed === true
     });
