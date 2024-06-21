@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { List, Task } from '../data-models/interfaces';
 import { formatDistance } from "date-fns";
 import Delete from '@material-design-icons/svg/two-tone/delete.svg?react';
+import Timer from './Timer';
 
 interface TaskProps {
     lists: List[];
@@ -169,6 +170,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
                 Completed
             </label>
             <span>{formatDistance(task.timestamp, new Date(), { addSuffix: true, includeSeconds: true })}</span>
+            <Timer timerStartValue={task.timer} />
             <button onClick={handleDeleteTask}>
                 <Delete />
             </button>

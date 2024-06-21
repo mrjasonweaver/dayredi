@@ -12,6 +12,7 @@ const initialTasks: Task[] = [
     name: 'My fist task.',
     completed: false,
     timestamp: new Date().getTime(),
+    timer: 0,
   },
 ];
 

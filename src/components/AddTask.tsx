@@ -16,8 +16,9 @@ interface AddTaskProps {
  */
 const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
     const [name, setName] = useState('');
+    const [timer, setTimer] = useState(0);
 
-    const onAdd = (title: string) => {
+    const onAdd = (name: string, timer: number) => {
         const newTaskId = uuidv4();
         setLists((prevLists: List[]) => {
             const newLists = prevLists.map((list: List) => {
@@ -28,8 +29,9 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
                             ...list.tasks,
                             {
                                 id: newTaskId,
-                                name: title,
+                                name,
                                 completed: false,
+                                timer,
                                 timestamp: new Date().getTime(),
                             },
                         ],
@@ -55,13 +57,24 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
     };
 
     /**
+     * Handle the set timer event.
+     * @param event The input change event.
+     * @return {void}
+     * @description Set the timer state.
+     */
+    const handleSetTimer = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setTimer(parseInt(event.target.value));
+    };
+
+    /**
      * Handle the add submit event.
      * @return {void}
      */
     const handleAddSubmit = () => {
         if (name.trim() !== '') {
-            onAdd(name);
+            onAdd(name, timer);
             setName('');
+            setTimer(0);
         }
     };
 
@@ -71,7 +84,7 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
      * @return {void}
      */
     const handleAddOnEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && name !== '' && timer > 0) {
             handleAddSubmit();
         }
     };
@@ -79,6 +92,7 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
     return (
         <div>
             <input type="text" id="task-title" value={name} onChange={handleInputChange} onKeyDownCapture={handleAddOnEnter} />
+            <input type="number" id="task-timer" value={timer} onChange={handleSetTimer} onKeyDownCapture={handleAddOnEnter} />
             <button onClick={handleAddSubmit}>Add Task</button>
         </div>
     );
