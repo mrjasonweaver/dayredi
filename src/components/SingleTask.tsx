@@ -1,7 +1,8 @@
+/// <reference types="vite-plugin-svgr/client" />
 import { useState } from 'react';
 import { List, Task } from '../data-models/interfaces';
 import { formatDistance } from "date-fns";
-
+import Delete from '@material-design-icons/svg/two-tone/delete.svg?react';
 
 interface TaskProps {
     lists: List[];
@@ -150,7 +151,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
 
             return newLists;
         });
-    }
+    };
 
     /**
      * Handle the delete task event.
@@ -158,7 +159,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
      */
     const handleDeleteTask = () => {
         deleteTask();
-    }
+    };
 
     return (
         <div>
@@ -168,7 +169,9 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
                 Completed
             </label>
             <span>{formatDistance(task.timestamp, new Date(), { addSuffix: true, includeSeconds: true })}</span>
-            <button onClick={handleDeleteTask}>Delete</button>
+            <button onClick={handleDeleteTask}>
+                <Delete />
+            </button>
         </div>
     );
 };
