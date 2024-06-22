@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+/// <reference types="vite-plugin-svgr/client" />
+import Play from '@material-design-icons/svg/two-tone/play_arrow.svg?react';
+import Pause from '@material-design-icons/svg/two-tone/pause.svg?react';
 
 interface TimerProps {
   timerStartValue: number;
@@ -13,7 +16,7 @@ const Timer: React.FC<TimerProps> = ({ timerStartValue }) => {
 
     // We need to convert the countdown for display in hours, minutes and seconds.
     const hours = Math.floor(countdown / 3600);
-    const minutes = Math.floor(countdown / 60);
+    const minutes = Math.floor((countdown % 3600) / 60);
     const seconds = countdown % 60;
     const displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
     const displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
@@ -43,10 +46,10 @@ const Timer: React.FC<TimerProps> = ({ timerStartValue }) => {
     };
 
     return (
-        <div>
-            <h1>Countdown: {displayTime}</h1>
-            <button onClick={handleStart}>Start</button>
-            <button onClick={handlePause}>Pause</button>
+        <div className="timer-controls">
+            <p className="timer-display">{displayTime}</p>
+            {!isRunning && <button onClick={handleStart}><Play /></button>}
+            {isRunning && <button onClick={handlePause}><Pause /></button>}
         </div>
     );
 };

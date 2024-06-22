@@ -28,6 +28,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  font-size: 16px;
 }
 
 h1 {
@@ -38,13 +39,14 @@ h1 {
 button {
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+  padding: 10px 20px;
+  font-size: 16px;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background: rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: border-color 0.25s;
+  text-transform: uppercase;
 }
 button:hover {
   border-color: #646cff;
@@ -58,6 +60,78 @@ svg {
   fill: currentColor;
 }
 
+input {
+  border-radius: 10px;
+}
+
+input[type="text"],
+input[type="number"] {
+  /* Reset */
+  font: inherit;
+  color: inherit;
+  border: 1px solid transparent;
+  outline: 0;
+  padding: 0;
+  background: none;
+  appearance: none;
+  /* Custom */
+  padding: 5px 21px;
+  font-size: 21px;
+  font-weight: 500;
+  color: #ffffff;
+}
+input[type="text"]::placeholder,
+input[type="number"]::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+input[type="text"]:focus,
+input[type="number"]:focus {
+  border: 1px solid currentColor;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"]#task-title,
+input[type="number"]#task-timer {
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.add-task {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 40px 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.list-wrap > div,
+.timer-controls {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.list-wrap > div {
+  margin: 20px 0;
+  padding: 20px 30px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.timer-display {
+  font-size: 45px;
+  margin: 0;
+  font-weight: 700;
+  min-width: 200px;
+  text-align: left;
+}
+
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -66,7 +140,12 @@ svg {
   a:hover {
     color: #747bff;
   }
-  button {
-    background-color: #f9f9f9;
+  input[type="text"],
+  input[type="number"] {
+    color: #000000;
+  }
+  input[type="text"]::placeholder,
+  input[type="number"]::placeholder {
+    color: rgba(0, 0, 0, 0.5);
   }
 }

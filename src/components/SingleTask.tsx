@@ -165,15 +165,15 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
     return (
         <div>
             <input type="text" value={currentName || name} placeholder="Enter a task description." id={taskId} onChange={handleTitleChange} onKeyDownCapture={handleNameSubmit} />
+            <Timer timerStartValue={task.timer} />
+            <button onClick={handleDeleteTask}>
+                <Delete />
+            </button>
             <label>
                 <input type="checkbox" name={taskId} checked={completed} onChange={handleCheckboxChange} />
                 Completed
             </label>
             <span>{formatDistance(task.timestamp, new Date(), { addSuffix: true, includeSeconds: true })}</span>
-            <Timer timerStartValue={task.timer} />
-            <button onClick={handleDeleteTask}>
-                <Delete />
-            </button>
         </div>
     );
 };
