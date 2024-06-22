@@ -32,7 +32,7 @@ function App() {
   const [lists, setLists] = useState<List[]>(localList.length ? localList : initialList);
   const [currentList, setCurrentList] = useState<string>(initialListId);
   const title = 'List Timer';
-  const description = 'A productivity app for time blocking tasks';
+  const description = 'A time blocking productivity app.';
 
 
   return (
