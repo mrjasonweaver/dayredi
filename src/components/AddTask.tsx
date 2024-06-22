@@ -91,8 +91,20 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
 
     return (
         <div className="add-task">
-            <input type="text" id="task-title" placeholder="Example: Focus on email" value={name} onChange={handleInputChange} onKeyDownCapture={handleAddOnEnter} />
-            <input type="number" id="task-timer" placeholder="Example: 60" value={timer > 0 ? timer : ''} onChange={handleSetTimer} onKeyDownCapture={handleAddOnEnter} />
+            <input
+                type="text"
+                id="task-title"
+                placeholder="Enter task name"
+                value={name}
+                onChange={handleInputChange}
+                onKeyDownCapture={handleAddOnEnter} />
+            <input
+                type="number"
+                id="task-timer"
+                placeholder="Enter time in minutes"
+                value={timer > 0 ? timer : ''}
+                onChange={handleSetTimer}
+                onKeyDownCapture={handleAddOnEnter} />
             <button onClick={handleAddSubmit}>Add Task</button>
         </div>
     );
