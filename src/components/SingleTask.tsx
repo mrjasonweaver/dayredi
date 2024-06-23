@@ -4,7 +4,7 @@ import { List, Task } from '../data-models/interfaces';
 import { formatDistance } from "date-fns";
 import Delete from '@material-design-icons/svg/two-tone/delete.svg?react';
 import Timer from './Timer';
-import { updateLists, deleteTaskFromList } from '../utilities/state';
+import { updateTaskInList, deleteTaskFromList } from '../utilities/state';
 
 interface TaskProps {
     lists: List[];
@@ -46,7 +46,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
 
         // Update Lists state and local storage.
         setLists((prevLists: List[]) => {
-            return updateLists(currentList, prevLists, updatedTask);
+            return updateTaskInList(currentList, prevLists, updatedTask);
         });
     };
 
@@ -63,7 +63,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
 
         // Update Lists state and local storage.
         setLists((prevLists: List[]) => {
-            return updateLists(currentList, prevLists, updatedTask);
+            return updateTaskInList(currentList, prevLists, updatedTask);
         });
     }
 
@@ -74,7 +74,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
      * @description Update the task name if the keypress is Enter.
      */
     const handleNameSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        
+
         // Update if keypress is Enter.
         if (event.key === 'Enter') {
             updateTaskName();

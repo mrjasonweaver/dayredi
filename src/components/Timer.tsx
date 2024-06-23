@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 /// <reference types="vite-plugin-svgr/client" />
+import React, { useState, useEffect } from 'react';
 import Play from '@material-design-icons/svg/two-tone/play_arrow.svg?react';
 import Pause from '@material-design-icons/svg/two-tone/pause.svg?react';
 
@@ -8,7 +8,7 @@ interface TimerProps {
 }
 
 const Timer: React.FC<TimerProps> = ({ timerStartValue }) => {
-    const oneSecond = 1000; // 1000 milliseconds = 1 second
+    const oneSecond = 1000; // 1000 milliseconds = 1 second.
     const oneMinuteInSeconds = 60;
     const oneHourInSeconds = 3600;
     const doubleDigit = 10;
