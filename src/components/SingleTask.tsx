@@ -166,7 +166,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
         <div>
             <input type="text" value={currentName || name} placeholder="Enter a task description." id={taskId} onChange={handleTitleChange} onKeyDownCapture={handleNameSubmit} />
             <Timer timerStartValue={task.timer} />
-            <button onClick={handleDeleteTask}>
+            <button className="w-icon" onClick={handleDeleteTask}>
                 <Delete />
             </button>
             <label>

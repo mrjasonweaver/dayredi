@@ -1,26 +1,33 @@
 import React, { useState, useEffect } from 'react';
 /// <reference types="vite-plugin-svgr/client" />
-import Play from '@material-design-icons/svg/two-tone/play_arrow.svg?react';
-import Pause from '@material-design-icons/svg/two-tone/pause.svg?react';
+import Play from '@material-design-icons/svg/two-tone/play_circle.svg?react';
+import Pause from '@material-design-icons/svg/two-tone/pause_circle.svg?react';
 
 interface TimerProps {
   timerStartValue: number;
 }
 
 const Timer: React.FC<TimerProps> = ({ timerStartValue }) => {
+    const oneSecond = 1000; // 1000 milliseconds = 1 second
+    const oneMinuteInSeconds = 60;
+    const oneHourInSeconds = 3600;
+    const doubleDigit = 10;
+
     // We need the timerStartValue converted from minutes to seconds.
-    const convertedTimerStartValue = timerStartValue * 60;
+    const convertedTimerStartValue = timerStartValue * oneMinuteInSeconds;
+
+    // We need to keep track of the countdown and whether the timer is running.
     const [countdown, setCountdown] = useState(convertedTimerStartValue);
     const [isRunning, setIsRunning] = useState(false);
 
 
     // We need to convert the countdown for display in hours, minutes and seconds.
-    const hours = Math.floor(countdown / 3600);
-    const minutes = Math.floor((countdown % 3600) / 60);
-    const seconds = countdown % 60;
-    const displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
-    const displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
-    const displayHours = hours < 10 ? `0${hours}` : hours;
+    const hours = Math.floor(countdown / oneHourInSeconds);
+    const minutes = Math.floor((countdown % oneHourInSeconds) / oneMinuteInSeconds);
+    const seconds = countdown % oneMinuteInSeconds;
+    const displaySeconds = seconds < doubleDigit ? `0${seconds}` : seconds;
+    const displayMinutes = minutes < doubleDigit ? `0${minutes}` : minutes;
+    const displayHours = hours < doubleDigit ? `0${hours}` : hours;
     const displayTime = `${displayHours}:${displayMinutes}:${displaySeconds}`;
 
     useEffect(() => {
@@ -29,7 +36,7 @@ const Timer: React.FC<TimerProps> = ({ timerStartValue }) => {
         if (isRunning) {
             timer = setInterval(() => {
                 setCountdown((prevCountdown) => prevCountdown - 1);
-            }, 1000);
+            }, oneSecond);
         }
 
         return () => {
@@ -48,8 +55,8 @@ const Timer: React.FC<TimerProps> = ({ timerStartValue }) => {
     return (
         <div className="timer-controls">
             <p className="timer-display">{displayTime}</p>
-            {!isRunning && <button onClick={handleStart}><Play /></button>}
-            {isRunning && <button onClick={handlePause}><Pause /></button>}
+            {!isRunning && <button className="w-icon" onClick={handleStart}><Play /></button>}
+            {isRunning && <button className="w-icon" onClick={handlePause}><Pause /></button>}
         </div>
     );
 };

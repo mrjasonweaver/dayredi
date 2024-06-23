@@ -55,10 +55,17 @@ button {
   &:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
   }
+
+  &.w-icon {
+    padding: 5px 8px;
+    display: flex;
+  }
 }
 
 svg {
   fill: currentColor;
+  width: 32px;
+  height: 32px;
 }
 
 input {
