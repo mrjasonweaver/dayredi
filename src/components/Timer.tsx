@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Play from '@material-design-icons/svg/two-tone/play_arrow.svg?react';
 import Pause from '@material-design-icons/svg/two-tone/pause.svg?react';
+import Replay from '@material-design-icons/svg/two-tone/replay.svg?react';
+import useSound from 'use-sound';
 
 interface TimerProps {
   timerStartValue: number;
@@ -19,6 +21,7 @@ const Timer: React.FC<TimerProps> = ({ timerStartValue }) => {
     // We need to keep track of the countdown and whether the timer is running.
     const [countdown, setCountdown] = useState(convertedTimerStartValue);
     const [isRunning, setIsRunning] = useState(false);
+    const [play] = useSound('/sounds/alarm.mp3');
 
 
     // We need to convert the countdown for display in hours, minutes and seconds.
@@ -29,6 +32,27 @@ const Timer: React.FC<TimerProps> = ({ timerStartValue }) => {
     const displayMinutes = minutes < doubleDigit ? `0${minutes}` : minutes;
     const displayHours = hours < doubleDigit ? `0${hours}` : hours;
     const displayTime = `${displayHours}:${displayMinutes}:${displaySeconds}`;
+
+    // We need to add 5 minutes to the countdown.
+    const handleAddFiveMinutes = () => {
+        const fiveMinutesInSeconds = 300;
+        setCountdown(countdown + fiveMinutesInSeconds);
+    }
+
+    // We need to add 30 minutes to the countdown.
+    const handleAddThirtyMinutes = () => {
+        const thirtyMinutesInSeconds = 1800;
+        setCountdown(countdown + thirtyMinutesInSeconds);
+    }
+
+    // When the countdown reaches zero, we need to stop the timer and add a sound.
+    useEffect(() => {
+        if (countdown === 0) {
+            setIsRunning(false);
+            // Add a sound.
+            play();
+        }
+    }, [countdown, play]);
 
     useEffect(() => {
         let timer: NodeJS.Timeout;
@@ -57,6 +81,9 @@ const Timer: React.FC<TimerProps> = ({ timerStartValue }) => {
             <p className="timer-display">{displayTime}</p>
             {!isRunning && <button className="w-icon" onClick={handleStart}><Play /></button>}
             {isRunning && <button className="w-icon" onClick={handlePause}><Pause /></button>}
+            <button className="w-icon" onClick={() => setCountdown(convertedTimerStartValue)}><Replay /></button>
+            <button className="text-icon-button" onClick={handleAddFiveMinutes}>+5</button>
+            <button className="text-icon-button" onClick={handleAddThirtyMinutes}>+30</button>
         </div>
     );
 };
