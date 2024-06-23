@@ -59,6 +59,12 @@ button {
   &.w-icon {
     padding: 5px 8px;
     display: flex;
+
+    &.completed {
+      svg {
+        fill: #00ff00;
+      }
+    }
   }
   &.text-icon-button {
     padding: 5px 8px;
@@ -120,18 +126,22 @@ input[type="number"] {
   border: 2px solid rgba(0, 0, 0, 0.2);
 }
 
-.list-wrap > div,
+.task,
 .timer-controls {
   display: flex;
   align-items: center;
   gap: 1em;
 }
 
-.list-wrap > div {
+.task {
   margin: 20px 0;
   padding: 20px 30px;
   border-radius: 20px;
   background: rgba(0, 0, 0, 0.2);
+
+  &.completed {
+    background: rgba(0, 100, 0, 0.2);
+  }
 }
 
 .timer-display {

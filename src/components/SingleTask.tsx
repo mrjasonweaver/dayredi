@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { List, Task } from '../data-models/interfaces';
 import { formatDistance } from "date-fns";
 import Delete from '@material-design-icons/svg/two-tone/delete.svg?react';
+import Check from '@material-design-icons/svg/two-tone/check.svg?react';
 import Timer from './Timer';
 import { updateTaskInList, deleteTaskFromList } from '../utilities/state';
 
@@ -31,12 +32,11 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
     };
 
     /**
-     * Handle the checkbox change event.
+     * Update the current task's completed status for the currentList.
      * @returns void
      * @description Update the current task's completed status.
      */
-    const handleCheckboxChange = () => {
-
+    const handleCompleteChange = () => {
         // Update the task's completed
         const updatedTask = {
             ...task,
@@ -48,7 +48,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
         setLists((prevLists: List[]) => {
             return updateTaskInList(currentList, prevLists, updatedTask);
         });
-    };
+    }
 
     /**
      * Update the current task's name for the currentList.
@@ -93,16 +93,15 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
     };
 
     return (
-        <div>
+        <div className={`task${task.completed ? ' completed' : ''}`}>
             <input type="text" value={currentName || name} placeholder="Enter a task description." id={taskId} onChange={handleTitleChange} onKeyDownCapture={handleNameSubmit} />
             <Timer timerStartValue={task.timer} />
             <button className="w-icon" onClick={handleDeleteTask}>
                 <Delete />
             </button>
-            <label>
-                <input type="checkbox" name={taskId} checked={completed} onChange={handleCheckboxChange} />
-                Completed
-            </label>
+            <button className={`w-icon${task.completed ? ' completed' : ''}`} onClick={handleCompleteChange}>
+                <Check />
+            </button>
             <span>{formatDistance(task.timestamp, new Date(), { addSuffix: true, includeSeconds: true })}</span>
         </div>
     );
