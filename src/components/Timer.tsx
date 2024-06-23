@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 /// <reference types="vite-plugin-svgr/client" />
-import Play from '@material-design-icons/svg/two-tone/play_circle.svg?react';
-import Pause from '@material-design-icons/svg/two-tone/pause_circle.svg?react';
+import Play from '@material-design-icons/svg/two-tone/play_arrow.svg?react';
+import Pause from '@material-design-icons/svg/two-tone/pause.svg?react';
 
 interface TimerProps {
   timerStartValue: number;

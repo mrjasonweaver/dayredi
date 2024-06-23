@@ -4,6 +4,7 @@ import { List, Task } from '../data-models/interfaces';
 import { formatDistance } from "date-fns";
 import Delete from '@material-design-icons/svg/two-tone/delete.svg?react';
 import Timer from './Timer';
+import { updateLists, deleteTaskFromList } from '../utilities/state';
 
 interface TaskProps {
     lists: List[];
@@ -30,59 +31,22 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
     };
 
     /**
-     * Utility to update the current task's completed status for the currentList.
-     * @param task The task to update.
-     * @returns The updated task.
-     */
-    const updateTaskCompletedStatus = (task: Task) => {
-        return {
-            ...task,
-            completed: !task.completed,
-            timestamp: new Date().getTime(),
-        }
-    }
-
-    /**
-     * Update the prevLists object with the current tasks list updated task's completed status.
-     * @param prevLists The previous lists object.
-     * @returns The updated prevLists object.
-     */
-    const updateLists = (prevLists: List[]): List[] => {
-        // Update the current task's completed status.
-        const updatedTask: Task = updateTaskCompletedStatus(task);
-    
-        // Update the currentList's tasks with the updated task.
-        const newList = prevLists.map((list: List) => {
-            if (list.id === currentList) {
-                return {
-                    ...list,
-                    tasks: list.tasks.map((task: Task) => {
-                        if (task.id === taskId) {
-                            return updatedTask;
-                        }
-                        return task;
-                    }),
-                };
-            }
-            return list;
-        });
-
-        // Update the local storage.
-        localStorage.setItem('list-timer-app', JSON.stringify(newList));
-
-        return newList;
-    
-    }
-
-
-    /**
      * Handle the checkbox change event.
      * @returns void
      * @description Update the current task's completed status.
      */
     const handleCheckboxChange = () => {
+
+        // Update the task's completed
+        const updatedTask = {
+            ...task,
+            completed: !task.completed,
+            timestamp: new Date().getTime(),
+        };
+
+        // Update Lists state and local storage.
         setLists((prevLists: List[]) => {
-            return updateLists(prevLists);
+            return updateLists(currentList, prevLists, updatedTask);
         });
     };
 
@@ -90,29 +54,16 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
      * Update the current task's name for the currentList.
      */
     const updateTaskName = () => {
+
+        // Update the task's name
+        const updatedTask = {
+            ...task,
+            name: currentName,
+        };
+
+        // Update Lists state and local storage.
         setLists((prevLists: List[]) => {
-            const newLists = prevLists.map((list: List) => {
-                if (list.id === currentList) {
-                    return {
-                        ...list,
-                        tasks: list.tasks.map((task: Task) => {
-                            if (task.id === taskId) {
-                                return {
-                                    ...task,
-                                    name: currentName,
-                                };
-                            }
-                            return task;
-                        }),
-                    };
-                }
-                return list;
-            });
-
-            // Update the local storage.
-            localStorage.setItem('list-timer-app', JSON.stringify(newLists));
-
-            return newLists;
+            return updateLists(currentList, prevLists, updatedTask);
         });
     }
 
@@ -123,6 +74,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
      * @description Update the task name if the keypress is Enter.
      */
     const handleNameSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        
         // Update if keypress is Enter.
         if (event.key === 'Enter') {
             updateTaskName();
@@ -130,36 +82,14 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
     };
 
     /**
-     * Delete the current task from the currentList.
-     * @returns void
-     */
-    const deleteTask = () => {
-        setLists((prevLists: List[]) => {
-            const newLists = prevLists.map((list: List) => {
-                if (list.id === currentList) {
-                    return {
-                        ...list,
-                        tasks: list.tasks.filter((task: Task) => {
-                            return task.id !== taskId;
-                        }),
-                    };
-                }
-                return list;
-            });
-
-            // Update the local storage.
-            localStorage.setItem('list-timer-app', JSON.stringify(newLists));
-
-            return newLists;
-        });
-    };
-
-    /**
      * Handle the delete task event.
      * @returns void
      */
     const handleDeleteTask = () => {
-        deleteTask();
+        // Update Lists state and local storage.
+        setLists((prevLists: List[]) => {
+            return deleteTaskFromList(currentList, prevLists, taskId);
+        });
     };
 
     return (

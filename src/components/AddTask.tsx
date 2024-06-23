@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { List } from '../data-models/interfaces';
+import { addTaskToList } from '../utilities/state';
 
 interface AddTaskProps {
     setLists: React.Dispatch<React.SetStateAction<List[]>>;
@@ -20,30 +21,19 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
 
     const onAdd = (name: string, timer: number) => {
         const newTaskId = uuidv4();
+
+        // Create a new task object.
+        const newTask = {
+            id: newTaskId,
+            name: name,
+            completed: false,
+            timer: timer,
+            timestamp: new Date().getTime(),
+        };
+
+        // Update Lists state and local storage.
         setLists((prevLists: List[]) => {
-            const newLists = prevLists.map((list: List) => {
-                if (list.id === currentList) {
-                    return {
-                        ...list,
-                        tasks: [
-                            ...list.tasks,
-                            {
-                                id: newTaskId,
-                                name,
-                                completed: false,
-                                timer,
-                                timestamp: new Date().getTime(),
-                            },
-                        ],
-                    };
-                }
-                return list;
-            });
-
-            // Save the new lists to local storage.
-            localStorage.setItem('list-timer-app', JSON.stringify(newLists));
-
-            return newLists;
+            return addTaskToList(currentList, prevLists, newTask);
         });
     }
 
