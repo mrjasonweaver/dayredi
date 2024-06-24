@@ -89,7 +89,6 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
                 return;
             }
             handleAddSubmit();
-
         }
     };
 

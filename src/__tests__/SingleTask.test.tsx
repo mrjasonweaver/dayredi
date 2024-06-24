@@ -14,6 +14,8 @@ describe('SingleTask', () => {
               id: 'task1',
               name: 'My fist task.',
               completed: false,
+              timer: 0,
+              timestamp: 0,
           }}
       />);
     
