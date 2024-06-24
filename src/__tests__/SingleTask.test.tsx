@@ -11,11 +11,11 @@ describe('SingleTask', () => {
           setLists={() => { }}
           currentList={'list1'}
           task={{
-              id: 'task1',
-              name: 'My fist task.',
-              completed: false,
-              timer: 0,
-              timestamp: 0,
+            id: 'task1',
+            name: 'My fist task.',
+            completed: false,
+            timestamp: new Date().getTime(),
+            timer: 0,
           }}
       />);
     

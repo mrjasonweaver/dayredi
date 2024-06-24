@@ -18,7 +18,6 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
     const [currentName, setCurrentName] = useState('');
 
     const taskId: string = task.id;
-    const completed: boolean = task.completed;
     const name: string = task.name;
 
     /**
