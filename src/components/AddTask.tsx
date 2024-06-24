@@ -20,7 +20,7 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
     const [timer, setTimer] = useState(0);
 
     // Add ref to the input element of the task title.
-    const taskTitleRef = React.createRef<HTMLInputElement>();
+    const taskNameRef = React.createRef<HTMLInputElement>();
 
     // Add ref to the input element of the task timer.
     const taskTimerRef = React.createRef<HTMLInputElement>();
@@ -67,7 +67,7 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
      * @return {void}
      */
     const handleAddSubmit = (): void => {
-        if (name.trim() !== '') {
+        if (name.trim() !== '' && timer !== 0) {
             onAdd(name, timer);
             setName('');
             setTimer(0);
@@ -81,14 +81,14 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
      */
     const handleAddOnEnter = (event: React.KeyboardEvent<HTMLInputElement>): void => {
         if (event.key === 'Enter') {
-            // Move the focus to the timer input.
-            if (event.currentTarget.id === 'task-title' && timer === 0) {
-                taskTimerRef.current?.focus();
+            if (event.currentTarget.id === 'task-name' && timer === 0) {
+                taskTimerRef.current?.focus(); // Move the focus to the timer input.
+                return;
             } else if (event.currentTarget.id === 'task-timer' && name.trim() === '') {
-                taskTitleRef.current?.focus();
-            } else {
-                handleAddSubmit();
+                taskNameRef.current?.focus(); // Move the focus to the name input.
+                return;
             }
+            handleAddSubmit();
 
         }
     };
@@ -96,9 +96,9 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
     return (
         <div className="add-task">
             <input
-                ref={taskTitleRef}
+                ref={taskNameRef}
                 type="text"
-                id="task-title"
+                id="task-name"
                 placeholder="Enter task name"
                 value={name}
                 onChange={handleInputChange}
@@ -111,7 +111,7 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
                 value={timer > 0 ? timer : ''}
                 onChange={handleSetTimer}
                 onKeyDownCapture={handleAddOnEnter} />
-            <button onClick={handleAddSubmit}>Add Task</button>
+            <button onClick={handleAddSubmit} disabled={(timer === 0) || name === ''}>Add Task</button>
         </div>
     );
 };
