@@ -49,7 +49,11 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
      * @return {void}
      */
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setName(event.target.value);
+        // We need to strip out anything that is not a letter or number. 
+        // Exclamation mark and period is allowed.
+        const regex = /[^a-zA-Z0-9! .]/g;
+        const newName = event.target.value.replace(regex, '');
+        setName(newName);
     };
 
     /**

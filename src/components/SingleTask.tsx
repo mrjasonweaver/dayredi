@@ -26,8 +26,12 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
      * @returns void
      * @description Update the current task's name.
      */
-    const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCurrentName(event.target.value);
+    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        // We need to strip out anything that is not a letter or number. 
+        // Exclamation mark and period is allowed.
+        const regex = /[^a-zA-Z0-9! .]/g;
+        const newName = event.target.value.replace(regex, '');
+        setCurrentName(newName);
     };
 
     /**
@@ -93,7 +97,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
 
     return (
         <div className={`task${task.completed ? ' completed' : ''}`}>
-            <input type="text" value={currentName || name} placeholder="Enter a task description." id={taskId} onChange={handleTitleChange} onKeyDownCapture={handleNameSubmit} />
+            <input type="text" value={currentName || name} placeholder="Enter a task description." id={taskId} onChange={handleNameChange} onKeyDownCapture={handleNameSubmit} />
             <Timer timerStartValue={task.timer} />
             <button className="w-icon" onClick={handleDeleteTask}>
                 <Delete />
