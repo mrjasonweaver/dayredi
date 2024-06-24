@@ -37,12 +37,6 @@ const Timer: React.FC<TimerProps> = ({ timerStartValue }) => {
         setCountdown(countdown + fiveMinutesInSeconds);
     }
 
-    // We need to add 30 minutes to the countdown.
-    const handleAddThirtyMinutes = () => {
-        const thirtyMinutesInSeconds = 1800;
-        setCountdown(countdown + thirtyMinutesInSeconds);
-    }
-
     // When the countdown reaches zero, we need to stop the timer and add a sound.
     useEffect(() => {
         if (countdown === 0) {
@@ -76,11 +70,12 @@ const Timer: React.FC<TimerProps> = ({ timerStartValue }) => {
     return (
         <div className="timer-controls">
             <p className={`timer-display${isRunning ? ' active' : ''}`}>{displayTime}</p>
-            {!isRunning && <button className="w-icon" onClick={handleStart}><Play /></button>}
-            {isRunning && <button className="w-icon" onClick={handlePause}><Pause /></button>}
-            <button className="w-icon replay-icon" onClick={() => setCountdown(convertedTimerStartValue)}><Replay /></button>
-            <button className="text-icon-button" onClick={handleAddFiveMinutes}>+5</button>
-            <button className="text-icon-button" onClick={handleAddThirtyMinutes}>+30</button>
+            <div className="timer-display-controls">
+                {!isRunning && <button className="w-icon" onClick={handleStart}><Play /></button>}
+                {isRunning && <button className="w-icon" onClick={handlePause}><Pause /></button>}
+                <button className="text-icon-button" onClick={handleAddFiveMinutes}>+5</button>
+                <button className="w-icon replay-icon" onClick={() => setCountdown(convertedTimerStartValue)}><Replay /></button>
+            </div>
         </div>
     );
 };

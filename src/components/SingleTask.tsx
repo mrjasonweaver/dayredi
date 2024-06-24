@@ -101,7 +101,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
                 <>
                     <input type="text" value={currentName || name} placeholder="Enter a task description." id={taskId} onChange={handleNameChange} onKeyDownCapture={handleNameSubmit} />
                     <Timer timerStartValue={task.timer} />
-                    <button className={`w-icon${task.completed ? ' completed' : ''}`} onClick={handleCompleteChange}>
+                    <button className={`w-icon done-icon${task.completed ? ' completed' : ''}`} onClick={handleCompleteChange}>
                         <Check />
                     </button>
                 </>

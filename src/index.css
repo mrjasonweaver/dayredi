@@ -1,5 +1,8 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Saira", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
   line-height: 1.5;
   font-weight: 400;
 
@@ -35,7 +38,8 @@ h1 {
   line-height: 1.1;
 
   &.logo {
-    font-size: 0;
+    font-size: 12px;
+    text-indent: -9999px;
     background-image: url(../images/dayredi.webp);
     background-size: 151.5px 55.5px;
     background-repeat: no-repeat;
@@ -71,8 +75,15 @@ button {
 
     svg {
       fill: currentColor;
-      width: 32px;
-      height: 32px;
+      width: 22px;
+      height: 22px;
+    }
+    &.done-icon {
+      padding: 8px 12px;
+      svg {
+        width: 26px;
+        height: 26px;
+      }
     }
 
     &.completed {
@@ -90,15 +101,15 @@ button {
     &.replay-icon {
       padding: 8px 12px;
       svg {
-        width: 26px;
-        height: 26px;
+        width: 18px;
+        height: 18px;
       }
     
     }
   }
   &.text-icon-button {
     padding: 5px 8px;
-    font-size: 28px;
+    font-size: 18px;
   }
 }
 
@@ -158,11 +169,18 @@ input[type="number"] {
 }
 
 .task,
+.timer-display-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+}
+
 .timer-controls {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 1em;
+  justify-content: center;
+  gap: 0;
 }
 
 .task {
@@ -177,10 +195,10 @@ input[type="number"] {
 }
 
 .timer-display {
-  font-size: 45px;
+  font-size: 36px;
   margin: 0;
   font-weight: 700;
-  min-width: 210px;
+  min-width: 168px;
   text-align: left;
 
   &.active {
