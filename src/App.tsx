@@ -37,7 +37,9 @@ function App() {
 
   return (
     <>
-      <h1>{title}</h1>
+      <header>
+          <h1 className="logo">{title}</h1>
+      </header>
       <div className="card">
         <TaskList
           lists={lists}

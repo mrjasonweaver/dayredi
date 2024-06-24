@@ -26,8 +26,6 @@ a {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
-  min-width: 320px;
   min-height: 100vh;
   font-size: 16px;
 }
@@ -35,6 +33,16 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+
+  &.logo {
+    font-size: 0;
+    background-image: url(../images/dayredi.webp);
+    background-size: 151.5px 55.5px;
+    background-repeat: no-repeat;
+    width: 151.5px;
+    height: 55.5px;
+    margin: 0 auto;
+  }
 }
 
 button {
@@ -61,22 +69,37 @@ button {
     padding: 5px 8px;
     display: flex;
 
+    svg {
+      fill: currentColor;
+      width: 32px;
+      height: 32px;
+    }
+
     &.completed {
       svg {
         fill: #00ff00;
       }
+    }
+    &.delete-icon {
+      padding: 8px 12px;
+      svg {
+        width: 26px;
+        height: 26px;
+      }
+    }
+    &.replay-icon {
+      padding: 8px 12px;
+      svg {
+        width: 26px;
+        height: 26px;
+      }
+    
     }
   }
   &.text-icon-button {
     padding: 5px 8px;
     font-size: 28px;
   }
-}
-
-svg {
-  fill: currentColor;
-  width: 32px;
-  height: 32px;
 }
 
 input {
@@ -118,13 +141,20 @@ input[type="number"] {
   display: flex;
   gap: 1em;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   margin: 20px 0;
   padding: 40px 30px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   background: rgba(0, 0, 0, 0.2);
   border: 2px solid rgba(0, 0, 0, 0.2);
+
+  .add-task-inputs {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .task,
@@ -174,6 +204,11 @@ input[type="number"] {
   :root {
     color: #213547;
     background-color: #f2f2f2;
+  }
+  h1 {
+    &.logo {
+      filter: invert(1);
+    }
   }
   button {
     background-color: white;

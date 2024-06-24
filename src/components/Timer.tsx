@@ -78,7 +78,7 @@ const Timer: React.FC<TimerProps> = ({ timerStartValue }) => {
             <p className={`timer-display${isRunning ? ' active' : ''}`}>{displayTime}</p>
             {!isRunning && <button className="w-icon" onClick={handleStart}><Play /></button>}
             {isRunning && <button className="w-icon" onClick={handlePause}><Pause /></button>}
-            <button className="w-icon" onClick={() => setCountdown(convertedTimerStartValue)}><Replay /></button>
+            <button className="w-icon replay-icon" onClick={() => setCountdown(convertedTimerStartValue)}><Replay /></button>
             <button className="text-icon-button" onClick={handleAddFiveMinutes}>+5</button>
             <button className="text-icon-button" onClick={handleAddThirtyMinutes}>+30</button>
         </div>

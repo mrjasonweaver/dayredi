@@ -1,7 +1,7 @@
 import React from 'react';
 import SingleTask from './SingleTask';
 import { List, Task } from '../data-models/interfaces';
-import AddTask from './AddTask';
+import AddNewTask from './AddNewTask';
 import { deleteCompletedTasks } from '../utilities/state';
 
 interface TaskListProps {
@@ -37,11 +37,11 @@ const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => 
 
     return (
         <>
-            <h2>Tasks ({incompleteTasks?.length})</h2>
-            <AddTask
+            <AddNewTask
                 setLists={setLists}
                 currentList={currentList}
             />
+            <h2>Tasks ({incompleteTasks?.length})</h2>
             <div className="list-wrap">
                 {incompleteTasks?.map((task, index) => {
                     return (

@@ -1,11 +1,11 @@
 import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import AddTask from '../components/AddTask';
+import AddNewTask from '../components/AddNewTask';
 
-describe('AddTask', () => {
-    it('should render AddTask component with props', () => {
-        // Render the AddTask component with props.
-        render(<AddTask
+describe('AddNewTask', () => {
+    it('should render AddNewTask component with props', () => {
+        // Render the AddNewTask component with props.
+        render(<AddNewTask
             setLists={() => { }}
             currentList={'list1'}
         />);

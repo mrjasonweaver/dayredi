@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { List } from '../data-models/interfaces';
 import { addTaskToList } from '../utilities/state';
+import AddTask from '@material-design-icons/svg/two-tone/add_task.svg?react';
 
 interface AddTaskProps {
     setLists: React.Dispatch<React.SetStateAction<List[]>>;
@@ -9,13 +10,13 @@ interface AddTaskProps {
 }
 
 /**
- * AddTask component to add a new task to the current list.
+ * AddNewTask component to add a new task to the current list.
  * @param setLists The setLists function to update the lists state.
  * @param currentList The current list id.
- * @returns The AddTask component.
+ * @returns The AddNewTask component.
  * @return {JSX.Element}
  */
-const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
+const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
     const [name, setName] = useState('');
     const [timer, setTimer] = useState(0);
 
@@ -98,25 +99,27 @@ const AddTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
 
     return (
         <div className="add-task">
-            <input
-                ref={taskNameRef}
-                type="text"
-                id="task-name"
-                placeholder="Enter task name"
-                value={name}
-                onChange={handleInputChange}
-                onKeyDownCapture={handleAddOnEnter} />
-            <input
-                ref={taskTimerRef}
-                type="number"
-                id="task-timer"
-                placeholder="Enter time in minutes"
-                value={timer > 0 ? timer : ''}
-                onChange={handleSetTimer}
-                onKeyDownCapture={handleAddOnEnter} />
-            <button onClick={handleAddSubmit} disabled={(timer === 0) || name === ''}>Add Task</button>
+            <div className="add-task-inputs">
+                <input
+                    ref={taskNameRef}
+                    type="text"
+                    id="task-name"
+                    placeholder="Enter task name"
+                    value={name}
+                    onChange={handleInputChange}
+                    onKeyDownCapture={handleAddOnEnter} />
+                <input
+                    ref={taskTimerRef}
+                    type="number"
+                    id="task-timer"
+                    placeholder="Enter time in minutes"
+                    value={timer > 0 ? timer : ''}
+                    onChange={handleSetTimer}
+                    onKeyDownCapture={handleAddOnEnter} />
+            </div>
+            <button className="w-icon" onClick={handleAddSubmit} disabled={(timer === 0) || name === ''}><AddTask /></button>
         </div>
     );
 };
 
-export default AddTask;
+export default AddNewTask;
