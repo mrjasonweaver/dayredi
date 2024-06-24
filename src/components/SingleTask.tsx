@@ -97,15 +97,29 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
 
     return (
         <div className={`task${task.completed ? ' completed' : ''}`}>
-            <input type="text" value={currentName || name} placeholder="Enter a task description." id={taskId} onChange={handleNameChange} onKeyDownCapture={handleNameSubmit} />
-            <Timer timerStartValue={task.timer} />
-            <button className="w-icon" onClick={handleDeleteTask}>
-                <Delete />
-            </button>
-            <button className={`w-icon${task.completed ? ' completed' : ''}`} onClick={handleCompleteChange}>
-                <Check />
-            </button>
-            <span>{formatDistance(task.timestamp, new Date(), { addSuffix: true, includeSeconds: true })}</span>
+            {!task.completed && 
+                <>
+                    <input type="text" value={currentName || name} placeholder="Enter a task description." id={taskId} onChange={handleNameChange} onKeyDownCapture={handleNameSubmit} />
+                    <Timer timerStartValue={task.timer} />
+                    <button className={`w-icon${task.completed ? ' completed' : ''}`} onClick={handleCompleteChange}>
+                        <Check />
+                    </button>
+                </>
+            }
+            {task.completed && 
+                <>
+                    <div className="task-completed-wrap">
+                        <button className={`w-icon${task.completed ? ' completed' : ''}`} onClick={handleCompleteChange}>
+                            <Check />
+                        </button> 
+                        <p><strong>{name}</strong></p> 
+                        <span>{formatDistance(task.timestamp, new Date(), { addSuffix: true, includeSeconds: true })}</span>
+                    </div>
+                    <button className="w-icon delete-icon" onClick={handleDeleteTask}>
+                        <Delete />
+                    </button>
+                </>
+            }
         </div>
     );
 };

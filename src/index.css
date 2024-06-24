@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #1d1d1d;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,11 +15,12 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #d6e71b;
   text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+
+  &:hover {
+    color: #e6fa04;
+  }
 }
 
 body {
@@ -45,11 +46,11 @@ button {
   font-family: inherit;
   background: rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.25s;
   text-transform: uppercase;
 
   &:hover {
-    border-color: #646cff;
+    background-color: rgba(0, 0, 0, 0.797);
   }
   &:focus,
   &:focus-visible {
@@ -130,22 +131,18 @@ input[type="number"] {
 .timer-controls {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 1em;
 }
 
 .task {
-  transition: opacity ease-in-out 0.5s;
   margin: 20px 0;
   padding: 20px 30px;
   border-radius: 20px;
   background: rgba(0, 0, 0, 0.2);
 
   &.completed {
-    opacity: 0.5;
-
-    &:hover {
-      opacity: 1;
-    }
+    justify-content: space-between;
   }
 }
 
@@ -153,7 +150,7 @@ input[type="number"] {
   font-size: 45px;
   margin: 0;
   font-weight: 700;
-  min-width: 200px;
+  min-width: 210px;
   text-align: left;
 
   &.active {
@@ -161,14 +158,41 @@ input[type="number"] {
   }
 }
 
+.task-completed-wrap {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  justify-content: flex-start;
+
+  button.delete-icon {
+    margin-right: auto;
+  }
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    background-color: #f2f2f2;
   }
-  a:hover {
-    color: #747bff;
+  button {
+    background-color: white;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+  .task,
+  .add-task {
+    background: rgba(255, 255, 255, 0.9);
+  }
+  .add-task {
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  }
+  #task-name,
+  #task-timer {
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    background: white;
   }
   input[type="text"],
   input[type="number"] {
