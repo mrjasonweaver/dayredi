@@ -3,22 +3,25 @@ import React, { useState, useEffect } from 'react';
 import Play from '@material-design-icons/svg/two-tone/play_arrow.svg?react';
 import Pause from '@material-design-icons/svg/two-tone/pause.svg?react';
 import Replay from '@material-design-icons/svg/two-tone/replay.svg?react';
+import { List } from '../data-models/interfaces';
+import { updateTaskTimerInList } from '../utilities/state';
 
 interface TimerProps {
-  timerStartValue: number;
+    currentList: string;
+    setLists: React.Dispatch<React.SetStateAction<List[]>>;
+    taskId: string;
+    timerStartValue: number;
 }
 
-const Timer: React.FC<TimerProps> = ({ timerStartValue }) => {
+const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStartValue }) => {
     const oneSecond = 1000; // 1000 milliseconds = 1 second.
     const oneMinuteInSeconds = 60;
     const oneHourInSeconds = 3600;
     const doubleDigit = 10;
 
-    // We need the timerStartValue converted from minutes to seconds.
-    const convertedTimerStartValue = timerStartValue * oneMinuteInSeconds;
-
     // We need to keep track of the countdown and whether the timer is running.
-    const [countdown, setCountdown] = useState(convertedTimerStartValue);
+    const [timerStart] = useState(timerStartValue);
+    const [countdown, setCountdown] = useState(timerStart);
     const [isRunning, setIsRunning] = useState(false);
 
 
@@ -37,23 +40,28 @@ const Timer: React.FC<TimerProps> = ({ timerStartValue }) => {
         setCountdown(countdown + fiveMinutesInSeconds);
     }
 
-    // When the countdown reaches zero, we need to stop the timer and add a sound.
+    // When the countdown reaches zero, we need to stop the timer.
     useEffect(() => {
         if (countdown === 0) {
             setIsRunning(false);
             // TODO: Add a sound.
+        } else {
+            // Update the task's timer
+            setLists((prevLists: List[]) => {
+                return updateTaskTimerInList(currentList, prevLists, taskId, countdown);
+            });
         }
     }, [countdown]);
 
     useEffect(() => {
         let timer: NodeJS.Timeout;
-
+    
         if (isRunning) {
             timer = setInterval(() => {
                 setCountdown((prevCountdown) => prevCountdown - 1);
             }, oneSecond);
         }
-
+    
         return () => {
             clearInterval(timer);
         };
@@ -74,7 +82,7 @@ const Timer: React.FC<TimerProps> = ({ timerStartValue }) => {
                 {!isRunning && <button className="w-icon" onClick={handleStart}><Play /></button>}
                 {isRunning && <button className="w-icon" onClick={handlePause}><Pause /></button>}
                 <button className="text-icon-button" onClick={handleAddFiveMinutes}>+5</button>
-                <button className="w-icon replay-icon" onClick={() => setCountdown(convertedTimerStartValue)}><Replay /></button>
+                <button className="w-icon replay-icon" onClick={() => setCountdown(timerStart)}><Replay /></button>
             </div>
         </div>
     );

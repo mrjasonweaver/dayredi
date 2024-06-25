@@ -13,7 +13,7 @@ const initialTasks: Task[] = [
     name: 'My first task.',
     completed: false,
     timestamp: new Date().getTime(),
-    timer: 60,
+    timer: 60 * 25, // 25 minutes
   },
 ];
 

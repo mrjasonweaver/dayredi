@@ -19,6 +19,7 @@ interface AddTaskProps {
  */
 const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList, title }) => {
     const [name, setName] = useState('');
+    const [timerMinutes, setTimerMinutes] = useState(0);
     const [timer, setTimer] = useState(0);
 
     // Add ref to the input element of the task title.
@@ -62,10 +63,13 @@ const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList, title }) =>
      * Handle the set timer event.
      * @param event The input change event.
      * @return {void}
-     * @description Set the timer state.
+     * @description Set the timer state in minutes and seconds.
      */
     const handleSetTimer = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setTimer(parseInt(event.target.value));
+        setTimerMinutes(parseInt(event.target.value));
+
+        // Convert timer minutes to seconds.
+        setTimer(parseInt(event.target.value) * 60);
     };
 
     /**
@@ -121,11 +125,11 @@ const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList, title }) =>
                     type="number"
                     id="task-timer"
                     placeholder="Enter time in minutes"
-                    value={timer > 0 ? timer : ''}
+                    value={timerMinutes > 0 ? timerMinutes : ''}
                     onChange={handleSetTimer}
                     onKeyDownCapture={handleAddOnEnter} />
             </div>
-            <button className="w-icon" onClick={handleAddSubmit} disabled={(timer === 0) || name === ''}><AddTask /></button>
+            <button className="w-icon" onClick={handleAddSubmit} disabled={(timerMinutes === 0) || name === ''}><AddTask /></button>
         </div>
     );
 };

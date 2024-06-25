@@ -108,3 +108,36 @@ export const deleteCompletedTasks = (currentList: string, prevLists: List[]): Li
 
     return newLists;
 }
+
+/**
+ * @description Update the timer for the task in the current list.
+ * @param currentList The current list id.
+ * @param prevLists The previous Lists state.
+ * @param taskId The task id.
+ * @param time The time to update.
+ * @returns The updated Lists state.
+ */
+export const updateTaskTimerInList = (currentList: string, prevLists: List[], taskId: string, time: number): List[] => {
+    const newLists = prevLists.map((list: List) => {
+        if (list.id === currentList) {
+            return {
+                ...list,
+                tasks: list.tasks.map((task: Task) => {
+                    if (task.id === taskId) {
+                        return {
+                            ...task,
+                            timer: time,
+                        };
+                    }
+                    return task;
+                }),
+            };
+        }
+        return list;
+    });
+
+    // Update the local storage.
+    localStorage.setItem('list-timer-app', JSON.stringify(newLists));
+
+    return newLists;
+}

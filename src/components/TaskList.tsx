@@ -27,13 +27,13 @@ const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => 
     });
 
     // Get the total time in minutes for the incomplete tasks.
-    const totalTimeInMinutes = incompleteTasks.reduce((acc, task) => acc + task.timer, 0);
-
-    // Get the totalTime in hours.
-    const totalHours = Math.floor(totalTimeInMinutes / 60);
+    const totalTimeInSeconds = incompleteTasks.reduce((acc, task) => acc + task.timer, 0);
 
     // Get the total minutes with 2 digits.
-    const totalMinutes = (totalTimeInMinutes % 60).toString().padStart(2, '0');
+    const totalMinutes = Math.floor(totalTimeInSeconds / 60);
+
+    // Get the total hours with 2 digits.
+    const totalHours = Math.floor(totalMinutes / 60);
 
     /**
      * Delete the completed tasks from the current list.
