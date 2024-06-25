@@ -31,16 +31,19 @@ body {
   font-size: 16px;
 }
 
+.logo {
+  font-size: 12px;
+  text-indent: -9999px;
+  background-image: url(../images/dayredi.webp);
+  background-repeat: no-repeat;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 
   &.logo {
-    font-size: 12px;
-    text-indent: -9999px;
-    background-image: url(../images/dayredi.webp);
     background-size: 151.5px 55.5px;
-    background-repeat: no-repeat;
     width: 151.5px;
     height: 55.5px;
     margin-right: 20px;
@@ -169,7 +172,7 @@ input[type="number"] {
   align-items: center;
   justify-content: space-between;
   margin: 0 0 20px;
-  padding: 40px 30px;
+  padding: 20px 30px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   background: #171717;
@@ -238,16 +241,48 @@ input[type="number"] {
   }
 }
 
+.no-tasks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 300px;
+
+  svg {
+    width: 100px;
+    height: 100px;
+    fill: rgba(100,100,100, 0.5);
+  }
+  p {
+    font-size: 25px;
+    color: rgba(100, 100, 100, 0.7);
+    font-weight: 700;
+  }
+}
+
+.site-footer {
+  padding: 20px 0;
+
+    .logo {
+      display: block;
+      margin: 0 auto;
+      background-size: 75.75px 27.75px;
+      width: 75.75px;
+      height: 27.75px;
+    }
+    p {
+      margin: 0;
+    }
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {
     color: #2d2d2d;
     background-color: #f2f2f2;
   }
-  h1 {
-    &.logo {
-      filter: invert(1);
-    }
+  .logo {
+    filter: invert(1);
   }
   button {
     background-color: white;

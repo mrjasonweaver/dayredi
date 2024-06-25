@@ -33,12 +33,12 @@ function App() {
   const [lists, setLists] = useState<List[]>(localList.length ? localList : initialList);
   const [currentList, setCurrentList] = useState<string>(initialListId);
   const title = 'Dayredi';
-  const description = 'A time blocking productivity app.';
+  const description = 'A time blocking task manager.';
 
 
   return (
     <>
-      <header>
+      <header className="site-header">
         <AddNewTask
             setLists={setLists}
             currentList={currentList}
@@ -47,13 +47,15 @@ function App() {
       </header>
       <div className="card">
         <TaskList
-          lists={lists}
-          setLists={setLists}
-          currentList={currentList}
+            lists={lists}
+            setLists={setLists}
+            currentList={currentList}
         />
-        <p>
-          {description}
-        </p>
+        <footer className="site-footer">
+            <span className="logo">{title}</span>
+            <p>{description}</p>
+            <p>© {new Date().getFullYear()}</p>
+        </footer>
       </div>
     </>
   )

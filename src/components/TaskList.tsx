@@ -3,6 +3,7 @@ import SingleTask from './SingleTask';
 import { List, Task } from '../data-models/interfaces';
 import { deleteCompletedTasks } from '../utilities/state';
 import DeleteSweep from '@material-design-icons/svg/two-tone/delete_sweep.svg?react';
+import Snooze from '@material-design-icons/svg/round/snooze.svg?react';
 
 interface TaskListProps {
     lists: List[];
@@ -38,25 +39,38 @@ const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => 
     return (
         <>
             <div className="list-wrap">
-                <div className="heading-wrap">
-                    <h2>{incompleteTasks?.length} Task{incompleteTasks?.length !== 1 ? 's' : ''}</h2>
-                </div>
-                {incompleteTasks?.map((task, index) => {
-                    return (
-                        <SingleTask
-                            key={index}
-                            lists={lists}
-                            setLists={setLists}
-                            currentList={currentList}
-                            task={task}
-                        />
-                    );
-                })}
+                {incompleteTasks?.length !== 0 ?
+                    <>
+                    <div className="heading-wrap">
+                        <h2>{incompleteTasks?.length} Task{incompleteTasks?.length !== 1 ? 's' : ''}</h2>
+                    </div>
+                    {incompleteTasks?.map((task, index) => {
+                        return (
+                            <SingleTask
+                                key={index}
+                                lists={lists}
+                                setLists={setLists}
+                                currentList={currentList}
+                                task={task}
+                            />
+                        );
+                    })}
+                    </>
+                    :
+                    <div className="no-tasks">
+                        <div><Snooze /></div>
+                        <p>No tasks yet. Let's get to work!</p>
+                    </div>
+                }
             </div>
             <div className="list-wrap">
                 <div className="heading-wrap">
-                    <h2>{completedTasks?.length} Completed Task{completedTasks?.length !== 1 ? 's' : ''}</h2>
-                    {completedTasks?.length > 0 && <button className="w-icon icon-w-text" onClick={deleteAllCompleted}><DeleteSweep />Delete All Completed</button>}
+                    {completedTasks?.length > 0 && 
+                        <>
+                            <h2>{completedTasks?.length} Completed Task{completedTasks?.length !== 1 ? 's' : ''}</h2>
+                            <button className="w-icon icon-w-text" onClick={deleteAllCompleted}><DeleteSweep />Delete All Completed</button>
+                        </>
+                    }
                 </div>
                 {completedTasks?.map((task, index) => {
                     return (
