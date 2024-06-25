@@ -1,6 +1,7 @@
-import { useState } from 'react'
-import './App.css'
-import TaskList from './components/TaskList'
+import { useState } from 'react';
+import './App.css';
+import TaskList from './components/TaskList';
+import AddNewTask from './components/AddNewTask';
 import { List, Task } from './data-models/interfaces';
 
 const initialListId: string = 'list1';
@@ -38,7 +39,11 @@ function App() {
   return (
     <>
       <header>
-          <h1 className="logo">{title}</h1>
+        <AddNewTask
+            setLists={setLists}
+            currentList={currentList}
+            title={title}
+        />
       </header>
       <div className="card">
         <TaskList

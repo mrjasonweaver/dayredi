@@ -49,9 +49,6 @@ h1 {
   }
 }
 
-h2 {
-}
-
 .heading-wrap {
   display: flex;
   align-items: center;
@@ -179,6 +176,12 @@ input[type="number"] {
   }
 }
 
+.name-input {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .task,
 .timer-display-controls {
   display: flex;
@@ -191,7 +194,7 @@ input[type="number"] {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0;
+  gap: 1em;
 }
 
 .task {

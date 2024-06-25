@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { List } from '../data-models/interfaces';
 import { addTaskToList } from '../utilities/state';
@@ -7,6 +7,7 @@ import AddTask from '@material-design-icons/svg/two-tone/add_task.svg?react';
 interface AddTaskProps {
     setLists: React.Dispatch<React.SetStateAction<List[]>>;
     currentList: string;
+    title: string;
 }
 
 /**
@@ -16,7 +17,7 @@ interface AddTaskProps {
  * @returns The AddNewTask component.
  * @return {JSX.Element}
  */
-const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
+const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList, title }) => {
     const [name, setName] = useState('');
     const [timer, setTimer] = useState(0);
 
@@ -94,11 +95,18 @@ const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList }) => {
                 return;
             }
             handleAddSubmit();
+            taskNameRef.current?.focus(); // Move the focus to the name input.
         }
     };
 
+    useEffect(() => {
+        // Move the focus to the name input when the component mounts.
+        taskNameRef.current?.focus();
+    }, []);
+
     return (
         <div className="add-task">
+            <h1 className="logo">{title}</h1>
             <div className="add-task-inputs">
                 <input
                     ref={taskNameRef}
