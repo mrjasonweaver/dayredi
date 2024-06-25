@@ -19,7 +19,6 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStart
     const oneHourInSeconds = 3600;
     const doubleDigit = 10;
 
-    // We need to keep track of the countdown and whether the timer is running.
     const [timerStart] = useState(timerStartValue);
     const [countdown, setCountdown] = useState(timerStart);
     const [isRunning, setIsRunning] = useState(false);
@@ -54,18 +53,22 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStart
     }, [countdown]);
 
     useEffect(() => {
-        let timer: NodeJS.Timeout;
     
         if (isRunning) {
-            timer = setInterval(() => {
-                setCountdown((prevCountdown) => prevCountdown - 1);
-            }, oneSecond);
+
+            // We need to update the countdown every second.
+            // Let's use requestAnimationFrame for better performance.
+            const start = Date.now();
+            const updateCountdown = () => {
+                const elapsed = Date.now() - start;
+                setCountdown(timerStart - Math.floor(elapsed / oneSecond));
+                requestAnimationFrame(updateCountdown);
+            };
+            requestAnimationFrame(updateCountdown);
+
+
         }
-    
-        return () => {
-            clearInterval(timer);
-        };
-    }, [isRunning]);
+    }, [isRunning, timerStart]);
 
     const handleStart = () => {
         setIsRunning(true);
