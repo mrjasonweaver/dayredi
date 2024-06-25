@@ -10,7 +10,7 @@ const initialTaskId: string = 'task1';
 const initialTasks: Task[] = [
   {
     id: initialTaskId,
-    name: 'My fist task.',
+    name: 'My first task.',
     completed: false,
     timestamp: new Date().getTime(),
     timer: 0,

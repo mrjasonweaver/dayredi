@@ -2,6 +2,7 @@ import React from 'react';
 import SingleTask from './SingleTask';
 import { List, Task } from '../data-models/interfaces';
 import { deleteCompletedTasks } from '../utilities/state';
+import DeleteSweep from '@material-design-icons/svg/two-tone/delete_sweep.svg?react';
 
 interface TaskListProps {
     lists: List[];
@@ -38,7 +39,7 @@ const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => 
         <>
             <div className="list-wrap">
                 <div className="heading-wrap">
-                    <h2>{incompleteTasks?.length} Tasks</h2>
+                    <h2>{incompleteTasks?.length} Task{incompleteTasks?.length !== 1 ? 's' : ''}</h2>
                 </div>
                 {incompleteTasks?.map((task, index) => {
                     return (
@@ -54,8 +55,8 @@ const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => 
             </div>
             <div className="list-wrap">
                 <div className="heading-wrap">
-                    <h2>{completedTasks?.length} Completed Tasks</h2>
-                    {completedTasks?.length > 0 && <button onClick={deleteAllCompleted}>Delete All Completed</button>}
+                    <h2>{completedTasks?.length} Completed Task{completedTasks?.length !== 1 ? 's' : ''}</h2>
+                    {completedTasks?.length > 0 && <button className="w-icon icon-w-text" onClick={deleteAllCompleted}><DeleteSweep />Delete All Completed</button>}
                 </div>
                 {completedTasks?.map((task, index) => {
                     return (

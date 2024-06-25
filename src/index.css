@@ -28,8 +28,6 @@ a {
 
 body {
   margin: 0;
-  display: flex;
-  min-height: 100vh;
   font-size: 16px;
 }
 
@@ -45,16 +43,20 @@ h1 {
     background-repeat: no-repeat;
     width: 151.5px;
     height: 55.5px;
-    margin: 0 auto;
+    margin-right: 20px;
   }
 }
 
 .heading-wrap {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 1em;
   padding-left: 30px;
+
+  h2 {
+    margin-bottom: 0;
+  }
 }
 
 button {
@@ -74,7 +76,7 @@ button {
   }
   &:focus,
   &:focus-visible {
-    outline: 4px auto -webkit-focus-ring-color;
+    outline: 1px auto -webkit-focus-ring-color;
   }
 
   &.w-icon {
@@ -112,7 +114,12 @@ button {
         width: 18px;
         height: 18px;
       }
-    
+    }
+    &.icon-w-text {
+      padding: 5px 15px;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
     }
   }
   &.text-icon-button {
@@ -130,7 +137,7 @@ input[type="number"] {
   /* Reset */
   font: inherit;
   color: inherit;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   outline: 0;
   padding: 0;
   background: none;
@@ -145,15 +152,15 @@ input[type="number"] {
     color: rgba(255, 255, 255, 0.5);
   }
   &:focus {
-    border: 1px solid currentColor;
-    background: rgba(0, 0, 0, 0.1);
+    border: 2px solid #232323;
+    background: #1d1d1d;
   }
 }
 
 #task-name,
 #task-timer {
-  border: 2px solid rgba(0, 0, 0, 0.1);
-  background: rgba(0, 0, 0, 0.1);
+  border: 2px solid #232323;
+  background: #1d1d1d;
 }
 
 .add-task {
@@ -165,9 +172,8 @@ input[type="number"] {
   padding: 40px 30px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
-  background: rgba(0, 0, 0, 0.2);
+  background: #171717;
   border: 2px solid rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(40px);
 
   .add-task-inputs {
     display: flex;
@@ -199,7 +205,6 @@ input[type="number"] {
 }
 
 .task {
-  min-width: 854px;
   margin: 20px 0;
   padding: 20px 30px;
   border-radius: 20px;
@@ -236,7 +241,7 @@ input[type="number"] {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: #2d2d2d;
     background-color: #f2f2f2;
   }
   h1 {
