@@ -26,6 +26,15 @@ const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => 
         return task.completed === true;
     });
 
+    // Get the total time in minutes for the incomplete tasks.
+    const totalTimeInMinutes = incompleteTasks.reduce((acc, task) => acc + task.timer, 0);
+
+    // Get the totalTime in hours.
+    const totalHours = Math.floor(totalTimeInMinutes / 60);
+
+    // Get the total minutes with 2 digits.
+    const totalMinutes = (totalTimeInMinutes % 60).toString().padStart(2, '0');
+
     /**
      * Delete the completed tasks from the current list.
      * @returns void
@@ -43,6 +52,7 @@ const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => 
                     <>
                     <div className="heading-wrap">
                         <h2>{incompleteTasks?.length} Task{incompleteTasks?.length !== 1 ? 's' : ''}</h2>
+                        <div className="heading">Total Time: {`${totalHours}:${totalMinutes}`}</div>
                     </div>
                     {incompleteTasks?.map((task, index) => {
                         return (

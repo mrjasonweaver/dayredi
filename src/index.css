@@ -55,9 +55,11 @@ h1 {
   align-items: flex-end;
   justify-content: space-between;
   gap: 1em;
-  padding-left: 30px;
+  padding: 0 30px;
 
-  h2 {
+  h2, .heading {
+    font-size: 28px;
+    font-weight: 700;
     margin-bottom: 0;
   }
 }
