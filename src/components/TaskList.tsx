@@ -36,10 +36,10 @@ const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => 
 
     return (
         <>
-            <div className="heading-wrap">
-                <h2>{incompleteTasks?.length} Tasks</h2>
-            </div>
             <div className="list-wrap">
+                <div className="heading-wrap">
+                    <h2>{incompleteTasks?.length} Tasks</h2>
+                </div>
                 {incompleteTasks?.map((task, index) => {
                     return (
                         <SingleTask
@@ -52,12 +52,11 @@ const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => 
                     );
                 })}
             </div>
-            
-            <div className="heading-wrap">
-                <h2>{completedTasks?.length} Completed Tasks</h2>
-                {completedTasks?.length > 0 && <button onClick={deleteAllCompleted}>Delete All Completed</button>}
-            </div>
             <div className="list-wrap">
+                <div className="heading-wrap">
+                    <h2>{completedTasks?.length} Completed Tasks</h2>
+                    {completedTasks?.length > 0 && <button onClick={deleteAllCompleted}>Delete All Completed</button>}
+                </div>
                 {completedTasks?.map((task, index) => {
                     return (
                         <SingleTask

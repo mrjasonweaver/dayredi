@@ -167,6 +167,7 @@ input[type="number"] {
   border-radius: 20px;
   background: rgba(0, 0, 0, 0.2);
   border: 2px solid rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(40px);
 
   .add-task-inputs {
     display: flex;
@@ -198,6 +199,7 @@ input[type="number"] {
 }
 
 .task {
+  min-width: 854px;
   margin: 20px 0;
   padding: 20px 30px;
   border-radius: 20px;
