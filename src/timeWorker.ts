@@ -1,4 +1,4 @@
-const workercode = () => {
+const timeWorker = () => {
 
     self.onmessage = function () {
         const oneSecond = 1000; // 1000 milliseconds = 1 second.
@@ -13,7 +13,7 @@ const workercode = () => {
     }
 };
 
-let code = workercode.toString();
+let code = timeWorker.toString();
 code = code.substring(code.indexOf("{")+1, code.lastIndexOf("}"));
 
 const blob = new Blob([code], {type: "application/javascript"});
