@@ -5,7 +5,6 @@ import Pause from '@material-design-icons/svg/two-tone/pause.svg?react';
 import Replay from '@material-design-icons/svg/two-tone/replay.svg?react';
 import { List } from '../data-models/interfaces';
 import { updateTaskTimerInList } from '../utilities/state';
-import { is } from 'date-fns/locale';
 
 interface TimerProps {
     currentList: string;
@@ -49,40 +48,51 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStart
         setIsRunning(false);
     };
 
-    // When the countdown reaches zero, we need to stop the timer.
+    /**
+     * When countdown reaches 0, we need to stop the timer.
+     * Else we need to update the Lists state.
+     * @todo: We need to add a end timer sound.
+     * @todo: We need to add a notification.
+     */
     useEffect(() => {
         if (countdown === 0) {
             setIsRunning(prev => prev && false);
             // TODO: Add a sound.
+        } else {
+            setLists((prevLists: List[]) => {
+                return updateTaskTimerInList(currentList, prevLists, taskId, countdown);
+            });
         }
-    }, [countdown]);
+    }, [countdown, currentList, setLists, taskId]);
 
+    /**
+     * We need to set elapsedTime every second.
+     * Let's use requestAnimationFrame for better performance.
+     */
     useEffect(() => {
-        if (!isRunning) {
-            return;
-        }
-        // We need to update the countdown every second.
-        // Let's use requestAnimationFrame for better performance.
-        const start = Date.now();
-        const updateCountdown = () => {
-            const elapsed = Date.now() - start;
-            setElapsedTime(Math.floor(elapsed / oneSecond));
+        if (isRunning) {
+            const start = Date.now();
+            const updateCountdown = () => {
+                const elapsed = Date.now() - start;
+                setElapsedTime(Math.floor(elapsed / oneSecond));
+                requestAnimationFrame(updateCountdown);
+            };
             requestAnimationFrame(updateCountdown);
-        };
-        requestAnimationFrame(updateCountdown);
+        }
     }, [isRunning]);
 
+    /**
+     * When elapsedTime changes, we need to update the countdown.
+     */
     useEffect(() => {
-        if (!isRunning) {
-            return;
+        if (isRunning) {
+            setCountdown(prevCount => prevCount - 1);
         }
-        // Update the countdown.
-        setCountdown(prevCount => prevCount - 1);
     }, [elapsedTime, isRunning]);
 
     return (
         <div className="timer-controls">
-            <p className={`timer-display${isRunning ? ' active' : ''}`}>{displayTime}</p>
+            <p className={`timer-display${isRunning ? ' active' : ''}${countdown === 0 ? ' countdown-zero' : ''}`}>{displayTime}</p>
             <div className="timer-display-controls">
                 {!isRunning && <button className="w-icon" onClick={handleStart}><Play /></button>}
                 {isRunning && <button className="w-icon" onClick={handlePause}><Pause /></button>}

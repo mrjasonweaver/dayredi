@@ -16,6 +16,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 a {
   font-weight: 500;
   color: #d6e71b;
@@ -229,6 +241,9 @@ input[type="number"] {
 
   &.active {
     color: #00ee00;
+  }
+  &.countdown-zero {
+    animation: blink 1s infinite;
   }
 }
 
