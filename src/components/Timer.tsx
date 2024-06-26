@@ -5,6 +5,7 @@ import Pause from '@material-design-icons/svg/two-tone/pause.svg?react';
 import Replay from '@material-design-icons/svg/two-tone/replay.svg?react';
 import { List } from '../data-models/interfaces';
 import { updateTaskTimerInList } from '../utilities/state';
+import worker_script from '../timeWorker';
 
 interface TimerProps {
     currentList: string;
@@ -66,22 +67,6 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStart
     }, [countdown, currentList, setLists, taskId]);
 
     /**
-     * We need to set elapsedTime every second.
-     * Let's use requestAnimationFrame for better performance.
-     */
-    useEffect(() => {
-        if (isRunning) {
-            const start = Date.now();
-            const updateCountdown = () => {
-                const elapsed = Date.now() - start;
-                setElapsedTime(Math.floor(elapsed / oneSecond));
-                requestAnimationFrame(updateCountdown);
-            };
-            requestAnimationFrame(updateCountdown);
-        }
-    }, [isRunning]);
-
-    /**
      * When elapsedTime changes, we need to update the countdown.
      */
     useEffect(() => {
@@ -89,6 +74,22 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStart
             setCountdown(prevCount => prevCount - 1);
         }
     }, [elapsedTime, isRunning]);
+
+    useEffect(() => {
+        const timeWorker = new Worker(worker_script);
+        if (isRunning) {
+            timeWorker.onmessage = (m) => {
+                setElapsedTime(m.data);
+            };
+            timeWorker.postMessage('start');
+        } else {
+            timeWorker.terminate()
+        }
+
+        return () => {
+            timeWorker.terminate()
+        }
+    }, [isRunning]);
 
     return (
         <div className="timer-controls">
