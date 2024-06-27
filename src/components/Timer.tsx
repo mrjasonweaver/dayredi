@@ -15,7 +15,6 @@ interface TimerProps {
 }
 
 const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStartValue }) => {
-    const oneSecond = 1000; // 1000 milliseconds = 1 second.
     const oneMinuteInSeconds = 60;
     const oneHourInSeconds = 3600;
     const doubleDigit = 10;
