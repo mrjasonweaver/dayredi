@@ -81,6 +81,7 @@ const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList, title }) =>
             onAdd(name, timer);
             setName('');
             setTimer(0);
+            setTimerMinutes(0);
         }
     };
 
