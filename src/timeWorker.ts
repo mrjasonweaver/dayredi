@@ -7,9 +7,9 @@ const timeWorker = () => {
             const elapsed = Date.now() - start;
             const elapsedTime = Math.floor(elapsed / oneSecond);
             self.postMessage(elapsedTime);
-            requestAnimationFrame(updateCountdown);
         };
-        requestAnimationFrame(updateCountdown);
+
+        setInterval(updateCountdown, oneSecond);
     }
 };
 
