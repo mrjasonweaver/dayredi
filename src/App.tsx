@@ -31,7 +31,7 @@ const localList: List[] = JSON.parse(localStorage.getItem('list-timer-app') || '
 
 function App() {
   const [lists, setLists] = useState<List[]>(localList.length ? localList : initialList);
-  const [currentList, setCurrentList] = useState<string>(initialListId);
+  const [currentList] = useState<string>(initialListId);
   const title = 'Dayredi';
   const description = 'A time blocking task manager.';
 

@@ -8,6 +8,9 @@ describe('renders Timer component', () => {
         render(
             <Timer
                 timerStartValue={1}
+                currentList={'list1'}
+                setLists={() => { }}
+                taskId={'task1'}
             />
         );
 

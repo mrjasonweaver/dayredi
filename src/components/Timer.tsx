@@ -15,15 +15,15 @@ interface TimerProps {
 }
 
 const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStartValue }) => {
-    const oneMinuteInSeconds = 60;
-    const oneHourInSeconds = 3600;
-    const doubleDigit = 10;
-
     const [timerStart] = useState(timerStartValue);
     const [countdown, setCountdown] = useState(timerStart);
     const [isRunning, setIsRunning] = useState(false);
     const [elapsedTime, setElapsedTime] = useState(0);
 
+    const oneMinuteInSeconds = 60;
+    const oneHourInSeconds = 3600;
+    const doubleDigit = 10;
+    const fiveMinutesInSeconds = 300;
 
     // We need to convert the countdown for display in hours, minutes and seconds.
     const hours = Math.floor(countdown / oneHourInSeconds);
@@ -34,25 +34,28 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStart
     const displayHours = hours < doubleDigit ? `0${hours}` : hours;
     const displayTime = `${displayHours}:${displayMinutes}:${displaySeconds}`;
 
-    // We need to add 5 minutes to the countdown.
-    const handleAddFiveMinutes = () => {
-        const fiveMinutesInSeconds = 300;
-        setCountdown(countdown + fiveMinutesInSeconds);
-    }
 
-    // We need to reset the countdown to the timerStart value.
-    const handleReplay = () => {
-        setCountdown(timerStart);
-    };
-
-    // We need to start the timer.
-    const handleStart = () => {
-        setIsRunning(true);
-    };
-
-    // We need to pause the timer.
-    const handlePause = () => {
-        setIsRunning(false);
+    /**
+     * Let's use the notification API to notify the user when the timer reaches 0.
+     */
+    const notification = () => {
+        // Check if the browser supports notifications.
+        if ('Notification' in window) {
+            // Check if the user has granted permission to show notifications.
+            if (Notification.permission === 'granted') {
+                // If it's okay let's create a notification.
+                new Notification('Timer is up!');
+                console.log('Notification sent!');
+            } else {
+                // Otherwise, we need to ask the user for permission.
+                Notification.requestPermission().then(function (permission) {
+                    // If the user accepts, let's create a notification.
+                    if (permission === 'granted') {
+                        new Notification('Timer is up!');
+                    }
+                });
+            }
+        }
     };
 
     /**
@@ -65,6 +68,9 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStart
         if (countdown === 0) {
             setIsRunning(prev => prev && false);
             // TODO: Add a sound.
+
+            // Add a notification using the Notification API.
+            notification();
         } else {
             setLists((prevLists: List[]) => {
                 return updateTaskTimerInList(currentList, prevLists, taskId, countdown);
@@ -101,10 +107,10 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStart
         <div className="timer-controls">
             <p className={`timer-display${isRunning ? ' active' : ''}${countdown === 0 ? ' countdown-zero' : ''}`}>{displayTime}</p>
             <div className="timer-display-controls">
-                {!isRunning && <button className="w-icon" onClick={handleStart}><Play /></button>}
-                {isRunning && <button className="w-icon" onClick={handlePause}><Pause /></button>}
-                <button className="text-icon-button" onClick={handleAddFiveMinutes}>+5</button>
-                <button className="w-icon replay-icon" onClick={handleReplay}><Replay /></button>
+                {!isRunning && <button className="w-icon" onClick={() => setIsRunning(true)}><Play /></button>}
+                {isRunning && <button className="w-icon" onClick={() => setIsRunning(false)}><Pause /></button>}
+                <button className="text-icon-button" onClick={() => setCountdown(countdown + fiveMinutesInSeconds)}>+5</button>
+                <button className="w-icon replay-icon" onClick={() => setCountdown(timerStart)}><Replay /></button>
             </div>
         </div>
     );

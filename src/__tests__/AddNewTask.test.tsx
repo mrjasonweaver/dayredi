@@ -8,6 +8,7 @@ describe('AddNewTask', () => {
         render(<AddNewTask
             setLists={() => { }}
             currentList={'list1'}
+            title={'Add New Task'}
         />);
         
         // Debug the screen.
