@@ -77,7 +77,6 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
      * @description Update the task name if the keypress is Enter.
      */
     const handleNameSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
-
         // Update if keypress is Enter.
         if (event.key === 'Enter') {
             updateTaskName();

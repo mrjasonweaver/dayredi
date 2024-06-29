@@ -106,8 +106,8 @@ const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList, title }) =>
 
     useEffect(() => {
         // Move the focus to the name input when the component mounts.
-        taskNameRef.current?.focus();
-    }, [taskNameRef]);
+        taskNameRef?.current?.focus();
+    }, []);
 
     return (
         <div className="add-task">

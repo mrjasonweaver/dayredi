@@ -40,10 +40,17 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStart
         setCountdown(countdown + fiveMinutesInSeconds);
     }
 
+    // We need to reset the countdown to the timerStart value.
+    const handleReplay = () => {
+        setCountdown(timerStart);
+    };
+
+    // We need to start the timer.
     const handleStart = () => {
         setIsRunning(true);
     };
 
+    // We need to pause the timer.
     const handlePause = () => {
         setIsRunning(false);
     };
@@ -82,11 +89,11 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStart
             };
             timeWorker.postMessage('start');
         } else {
-            timeWorker.terminate()
+            timeWorker.terminate();
         }
 
         return () => {
-            timeWorker.terminate()
+            timeWorker.terminate();
         }
     }, [isRunning]);
 
@@ -97,7 +104,7 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStart
                 {!isRunning && <button className="w-icon" onClick={handleStart}><Play /></button>}
                 {isRunning && <button className="w-icon" onClick={handlePause}><Pause /></button>}
                 <button className="text-icon-button" onClick={handleAddFiveMinutes}>+5</button>
-                <button className="w-icon replay-icon" onClick={() => setCountdown(timerStart)}><Replay /></button>
+                <button className="w-icon replay-icon" onClick={handleReplay}><Replay /></button>
             </div>
         </div>
     );
