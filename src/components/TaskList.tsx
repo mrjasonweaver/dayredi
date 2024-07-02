@@ -95,7 +95,7 @@ const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => 
                     {completedTasks?.length > 0 && 
                         <>
                             <h2>{completedTasks?.length} Completed Task{completedTasks?.length !== 1 ? 's' : ''}</h2>
-                            <button className="w-icon icon-w-text" onClick={deleteAllCompleted}><DeleteSweep />Delete All Completed</button>
+                            <button title="Delete all completed" className="w-icon delete-icon" onClick={deleteAllCompleted}><DeleteSweep /></button>
                         </>
                     }
                 </div>
