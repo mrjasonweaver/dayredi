@@ -108,7 +108,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
                         onKeyDownCapture={handleNameSubmit}
                     />
                 <Timer currentList={currentList} setLists={setLists} taskId={taskId} timerStartValue={task.timer} />
-                    <button className={`w-icon done-icon${task.completed ? ' completed' : ''}`} onClick={handleCompleteChange}>
+                    <button title="Done" className={`w-icon done-icon${task.completed ? ' completed' : ''}`} onClick={handleCompleteChange}>
                         <Check />
                     </button>
                 </>
@@ -116,13 +116,13 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
             {task.completed && 
                 <>
                     <div className="task-completed-wrap">
-                        <button className={`w-icon${task.completed ? ' completed' : ''}`} onClick={handleCompleteChange}>
+                        <button title="Add back to incomplete tasks" className={`w-icon${task.completed ? ' completed' : ''}`} onClick={handleCompleteChange}>
                             <Check />
                         </button> 
                         <p><strong>{name}</strong></p> 
                         <span>{formatDistance(task.timestamp, new Date(), { addSuffix: true, includeSeconds: true })}</span>
                     </div>
-                    <button className="w-icon delete-icon" onClick={handleDeleteTask}>
+                    <button className="w-icon delete-icon" title="Delete task" onClick={handleDeleteTask}>
                         <Delete />
                     </button>
                 </>
