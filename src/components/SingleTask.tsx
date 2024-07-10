@@ -1,7 +1,7 @@
 /// <reference types="vite-plugin-svgr/client" />
 import { useState } from 'react';
 import { List, Task } from '../data-models/interfaces';
-import { formatDistance } from "date-fns";
+import { formatDistance } from 'date-fns';
 import Delete from '@material-design-icons/svg/two-tone/delete.svg?react';
 import Check from '@material-design-icons/svg/two-tone/check.svg?react';
 import Timer from './Timer';
@@ -27,7 +27,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
      * @description Update the current task's name.
      */
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // We need to strip out anything that is not a letter or number. 
+        // We need to strip out anything that is not a letter or number.
         // Exclamation mark and period is allowed.
         const regex = /[^a-zA-Z0-9! .]/g;
         const newName = event.target.value.replace(regex, '');
@@ -51,13 +51,12 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
         setLists((prevLists: List[]) => {
             return updateTaskInList(currentList, prevLists, updatedTask);
         });
-    }
+    };
 
     /**
      * Update the current task's name for the currentList.
      */
     const updateTaskName = () => {
-
         // Update the task's name
         const updatedTask = {
             ...task,
@@ -68,7 +67,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
         setLists((prevLists: List[]) => {
             return updateTaskInList(currentList, prevLists, updatedTask);
         });
-    }
+    };
 
     /**
      * Handle the name keypress event.
@@ -96,7 +95,7 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
 
     return (
         <div className={`task${task.completed ? ' completed' : ''}`}>
-            {!task.completed && 
+            {!task.completed && (
                 <>
                     <input
                         type="text"
@@ -107,26 +106,46 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
                         onChange={handleNameChange}
                         onKeyDownCapture={handleNameSubmit}
                     />
-                <Timer currentList={currentList} setLists={setLists} taskId={taskId} timerStartValue={task.timer} />
-                    <button title="Done" className={`w-icon done-icon${task.completed ? ' completed' : ''}`} onClick={handleCompleteChange}>
+                    <Timer
+                        currentList={currentList}
+                        setLists={setLists}
+                        task={task}
+                    />
+                    <button
+                        title="Done"
+                        className={`w-icon done-icon${task.completed ? ' completed' : ''}`}
+                        onClick={handleCompleteChange}
+                    >
                         <Check />
                     </button>
                 </>
-            }
-            {task.completed && 
+            )}
+            {task.completed && (
                 <>
                     <div className="task-completed-wrap">
-                        <button title="Add back to incomplete tasks" className={`w-icon${task.completed ? ' completed' : ''}`} onClick={handleCompleteChange}>
+                        <button
+                            title="Add back to incomplete tasks"
+                            className={`w-icon${task.completed ? ' completed' : ''}`}
+                            onClick={handleCompleteChange}
+                        >
                             <Check />
-                        </button> 
-                        <p><strong>{name}</strong></p> 
-                        <span>{formatDistance(task.timestamp, new Date(), { addSuffix: true, includeSeconds: true })}</span>
+                        </button>
+                        <p>
+                            <strong>{name}</strong>
+                        </p>
+                        <span>
+                            {formatDistance(task.timestamp, new Date(), { addSuffix: true, includeSeconds: true })}
+                        </span>
                     </div>
-                    <button className="w-icon delete-icon" title="Delete task" onClick={handleDeleteTask}>
+                    <button
+                        className="w-icon delete-icon"
+                        title="Delete task"
+                        onClick={handleDeleteTask}
+                    >
                         <Delete />
                     </button>
                 </>
-            }
+            )}
         </div>
     );
 };

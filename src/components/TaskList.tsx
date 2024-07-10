@@ -12,7 +12,6 @@ interface TaskListProps {
 }
 
 const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => {
-
     const oneMinuteInSeconds = 60;
     const oneHourInSeconds = 3600;
 
@@ -40,7 +39,7 @@ const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => 
         } else {
             return '';
         }
-    }
+    };
 
     // Get the total hours with 2 digit display.
     const totalHours = () => {
@@ -50,7 +49,7 @@ const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => 
         } else {
             return '';
         }
-    }
+    };
 
     /**
      * Delete the completed tasks from the current list.
@@ -60,44 +59,56 @@ const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => 
         setLists((prevLists: List[]) => {
             return deleteCompletedTasks(currentList, prevLists);
         });
-    }
+    };
 
     return (
         <>
             <div className="list-wrap">
-                {incompleteTasks?.length !== 0 ?
+                {incompleteTasks?.length !== 0 ? (
                     <>
-                    <div className="heading-wrap">
-                        <h2>{incompleteTasks?.length} Task{incompleteTasks?.length !== 1 ? 's' : ''}</h2>
+                        <div className="heading-wrap">
+                            <h2>
+                                {incompleteTasks?.length} Task{incompleteTasks?.length !== 1 ? 's' : ''}
+                            </h2>
                             <div className="heading">{`${totalHours()} ${totalMinutes()}`}</div>
-                    </div>
-                    {incompleteTasks?.map((task, index) => {
-                        return (
-                            <SingleTask
-                                key={index}
-                                lists={lists}
-                                setLists={setLists}
-                                currentList={currentList}
-                                task={task}
-                            />
-                        );
-                    })}
+                        </div>
+                        {incompleteTasks?.map((task, index) => {
+                            return (
+                                <SingleTask
+                                    key={index}
+                                    lists={lists}
+                                    setLists={setLists}
+                                    currentList={currentList}
+                                    task={task}
+                                />
+                            );
+                        })}
                     </>
-                    :
+                ) : (
                     <div className="no-tasks">
-                        <div><Snooze /></div>
+                        <div>
+                            <Snooze />
+                        </div>
                         <p>No tasks yet. Let's get to work!</p>
                     </div>
-                }
+                )}
             </div>
             <div className="list-wrap">
                 <div className="heading-wrap">
-                    {completedTasks?.length > 0 && 
+                    {completedTasks?.length > 0 && (
                         <>
-                            <h2>{completedTasks?.length} Completed Task{completedTasks?.length !== 1 ? 's' : ''}</h2>
-                            <button title="Delete all completed" className="w-icon delete-icon" onClick={deleteAllCompleted}><DeleteSweep /></button>
+                            <h2>
+                                {completedTasks?.length} Completed Task{completedTasks?.length !== 1 ? 's' : ''}
+                            </h2>
+                            <button
+                                title="Delete all completed"
+                                className="w-icon delete-icon"
+                                onClick={deleteAllCompleted}
+                            >
+                                <DeleteSweep />
+                            </button>
                         </>
-                    }
+                    )}
                 </div>
                 {completedTasks?.map((task, index) => {
                     return (

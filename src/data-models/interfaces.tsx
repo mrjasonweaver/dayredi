@@ -8,9 +8,9 @@ interface Task {
     id: string;
     name: string;
     completed: boolean;
+    displayTime: string;
     timer: number;
     timestamp: number;
-    
 }
 
 export type { List, Task };

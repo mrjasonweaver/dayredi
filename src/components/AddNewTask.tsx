@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { List } from '../data-models/interfaces';
 import { addTaskToList } from '../utilities/state';
 import AddTask from '@material-design-icons/svg/two-tone/add_task.svg?react';
+import { convertSecondsToDisplayTime } from '../utilities/timeUtils';
 
 interface AddTaskProps {
     setLists: React.Dispatch<React.SetStateAction<List[]>>;
@@ -36,6 +37,7 @@ const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList, title }) =>
             id: newTaskId,
             name: name,
             completed: false,
+            displayTime: convertSecondsToDisplayTime(timer),
             timer: timer,
             timestamp: new Date().getTime(),
         };
@@ -44,7 +46,7 @@ const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList, title }) =>
         setLists((prevLists: List[]) => {
             return addTaskToList(currentList, prevLists, newTask);
         });
-    }
+    };
 
     /**
      * Handle the input change event.
@@ -52,7 +54,7 @@ const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList, title }) =>
      * @return {void}
      */
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        // We need to strip out anything that is not a letter or number. 
+        // We need to strip out anything that is not a letter or number.
         // Exclamation mark and period is allowed.
         const regex = /[^a-zA-Z0-9! .]/g;
         const newName = event.target.value.replace(regex, '');
@@ -120,7 +122,8 @@ const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList, title }) =>
                     placeholder="Enter task name"
                     value={name}
                     onChange={handleInputChange}
-                    onKeyDownCapture={handleAddOnEnter} />
+                    onKeyDownCapture={handleAddOnEnter}
+                />
                 <input
                     ref={taskTimerRef}
                     type="number"
@@ -128,9 +131,16 @@ const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList, title }) =>
                     placeholder="Enter time in minutes"
                     value={timerMinutes > 0 ? timerMinutes : ''}
                     onChange={handleSetTimer}
-                    onKeyDownCapture={handleAddOnEnter} />
+                    onKeyDownCapture={handleAddOnEnter}
+                />
             </div>
-            <button className="w-icon" onClick={handleAddSubmit} disabled={(timerMinutes === 0) || name === ''}><AddTask /></button>
+            <button
+                className="w-icon"
+                onClick={handleAddSubmit}
+                disabled={timerMinutes === 0 || name === ''}
+            >
+                <AddTask />
+            </button>
         </div>
     );
 };

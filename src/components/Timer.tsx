@@ -3,37 +3,22 @@ import React, { useState, useEffect } from 'react';
 import Play from '@material-design-icons/svg/two-tone/play_arrow.svg?react';
 import Pause from '@material-design-icons/svg/two-tone/pause.svg?react';
 import Replay from '@material-design-icons/svg/two-tone/replay.svg?react';
-import { List } from '../data-models/interfaces';
+import { List, Task } from '../data-models/interfaces';
 import { updateTaskTimerInList } from '../utilities/state';
 import worker_script from '../timeWorker';
 
 interface TimerProps {
     currentList: string;
     setLists: React.Dispatch<React.SetStateAction<List[]>>;
-    taskId: string;
-    timerStartValue: number;
+    task: Task;
 }
 
-const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStartValue }) => {
-    const oneMinuteInSeconds = 60;
-    const oneHourInSeconds = 3600;
-    const doubleDigit = 10;
+const Timer: React.FC<TimerProps> = ({ currentList, setLists, task }) => {
     const fiveMinutesInSeconds = 300;
-
-    const [timerStart] = useState(timerStartValue);
-    const [countdown, setCountdown] = useState(timerStart);
+    const [timerStart] = useState(task.timer);
+    const [countdown, setCountdown] = useState(task.timer);
     const [isRunning, setIsRunning] = useState(false);
     const [elapsedTime, setElapsedTime] = useState(0);
-
-    // We need to convert the countdown for display in hours, minutes and seconds.
-    const hours = Math.floor(countdown / oneHourInSeconds);
-    const minutes = Math.floor((countdown % oneHourInSeconds) / oneMinuteInSeconds);
-    const seconds = countdown % oneMinuteInSeconds;
-    const displaySeconds = seconds < doubleDigit ? `0${seconds}` : seconds;
-    const displayMinutes = minutes < doubleDigit ? `0${minutes}` : minutes;
-    const displayHours = hours < doubleDigit ? `0${hours}` : hours;
-    const displayTime = `${displayHours}:${displayMinutes}:${displaySeconds}`;
-
 
     /**
      * Let's use the notification API to notify the user when the timer reaches 0.
@@ -66,24 +51,23 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStart
      */
     useEffect(() => {
         if (countdown === 0) {
-            setIsRunning(prev => prev && false);
+            setIsRunning((prev) => prev && false);
             // TODO: Add a sound.
-
             // Add a notification using the Notification API.
             notification();
         } else {
             setLists((prevLists: List[]) => {
-                return updateTaskTimerInList(currentList, prevLists, taskId, countdown);
+                return updateTaskTimerInList(currentList, prevLists, task.id, countdown);
             });
         }
-    }, [countdown, currentList, setLists, taskId]);
+    }, [countdown]);
 
     /**
      * When elapsedTime changes, we need to update the countdown.
      */
     useEffect(() => {
         if (isRunning) {
-            setCountdown(prevCount => prevCount - 1);
+            setCountdown((prevCount) => prevCount - 1);
         }
     }, [elapsedTime, isRunning]);
 
@@ -100,17 +84,47 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStart
 
         return () => {
             timeWorker.terminate();
-        }
+        };
     }, [isRunning]);
 
     return (
         <div className="timer-controls">
-            <p className={`timer-display${isRunning ? ' active' : ''}${countdown === 0 ? ' countdown-zero' : ''}`}>{displayTime}</p>
+            <p className={`timer-display${isRunning ? ' active' : ''}${countdown === 0 ? ' countdown-zero' : ''}`}>
+                {task.displayTime}
+            </p>
             <div className="timer-display-controls">
-                {!isRunning && <button title="Start timer" className="w-icon" onClick={() => setIsRunning(true)}><Play /></button>}
-                {isRunning && <button title="Pause timer" className="w-icon" onClick={() => setIsRunning(false)}><Pause /></button>}
-                <button title="Add five minutes" className="text-icon-button" onClick={() => setCountdown(countdown + fiveMinutesInSeconds)}>+5</button>
-                <button title="Replay timer" className="w-icon replay-icon" onClick={() => setCountdown(timerStart)}><Replay /></button>
+                {!isRunning && (
+                    <button
+                        title="Start timer"
+                        className="w-icon"
+                        onClick={() => setIsRunning(true)}
+                    >
+                        <Play />
+                    </button>
+                )}
+                {isRunning && (
+                    <button
+                        title="Pause timer"
+                        className="w-icon"
+                        onClick={() => setIsRunning(false)}
+                    >
+                        <Pause />
+                    </button>
+                )}
+                <button
+                    title="Add five minutes"
+                    className="text-icon-button"
+                    onClick={() => setCountdown(countdown + fiveMinutesInSeconds)}
+                >
+                    +5
+                </button>
+                <button
+                    title="Replay timer"
+                    className="w-icon replay-icon"
+                    onClick={() => setCountdown(timerStart)}
+                >
+                    <Replay />
+                </button>
             </div>
         </div>
     );

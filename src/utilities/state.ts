@@ -1,4 +1,5 @@
 import { List, Task } from '../data-models/interfaces';
+import { convertSecondsToDisplayTime } from './timeUtils';
 
 /**
  * @description Update the prevLists object with the new updated task then return the new Lists state.
@@ -127,6 +128,7 @@ export const updateTaskTimerInList = (currentList: string, prevLists: List[], ta
                         return {
                             ...task,
                             timer: time,
+                            displayTime: convertSecondsToDisplayTime(time),
                         };
                     }
                     return task;

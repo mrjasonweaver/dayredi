@@ -1,4 +1,4 @@
-import { describe, it } from "vitest";
+import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import Timer from '../components/Timer';
 
@@ -7,15 +7,20 @@ describe('renders Timer component', () => {
         // Render the Timer component with props.
         render(
             <Timer
-                timerStartValue={1}
                 currentList={'list1'}
-                setLists={() => { }}
-                taskId={'task1'}
-            />
+                setLists={() => {}}
+                task={{
+                    id: 'task1',
+                    name: 'Task 1',
+                    completed: false,
+                    displayTime: '00:00:00',
+                    timer: 10,
+                    timestamp: Date.now(),
+                }}
+            />,
         );
 
         // Debug the screen.
         screen.debug();
     });
-
 });
