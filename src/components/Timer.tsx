@@ -55,11 +55,11 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, task }) => {
             // TODO: Add a sound.
             // Add a notification using the Notification API.
             notification();
-        } else {
-            setLists((prevLists: List[]) => {
-                return updateTaskTimerInList(currentList, prevLists, task.id, countdown);
-            });
         }
+
+        setLists((prevLists: List[]) => {
+            return updateTaskTimerInList(currentList, prevLists, task.id, countdown);
+        });
     }, [countdown]);
 
     /**
@@ -97,6 +97,7 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, task }) => {
                     <button
                         title="Start timer"
                         className="w-icon"
+                        disabled={countdown === 0}
                         onClick={() => setIsRunning(true)}
                     >
                         <Play />
@@ -106,6 +107,7 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, task }) => {
                     <button
                         title="Pause timer"
                         className="w-icon"
+                        disabled={countdown === 0}
                         onClick={() => setIsRunning(false)}
                     >
                         <Pause />
