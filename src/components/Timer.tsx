@@ -15,15 +15,15 @@ interface TimerProps {
 }
 
 const Timer: React.FC<TimerProps> = ({ currentList, setLists, taskId, timerStartValue }) => {
-    const [timerStart] = useState(timerStartValue);
-    const [countdown, setCountdown] = useState(timerStart);
-    const [isRunning, setIsRunning] = useState(false);
-    const [elapsedTime, setElapsedTime] = useState(0);
-
     const oneMinuteInSeconds = 60;
     const oneHourInSeconds = 3600;
     const doubleDigit = 10;
     const fiveMinutesInSeconds = 300;
+
+    const [timerStart] = useState(timerStartValue);
+    const [countdown, setCountdown] = useState(timerStart);
+    const [isRunning, setIsRunning] = useState(false);
+    const [elapsedTime, setElapsedTime] = useState(0);
 
     // We need to convert the countdown for display in hours, minutes and seconds.
     const hours = Math.floor(countdown / oneHourInSeconds);
