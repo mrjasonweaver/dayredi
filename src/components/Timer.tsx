@@ -5,7 +5,8 @@ import Pause from '@material-design-icons/svg/two-tone/pause.svg?react';
 import Replay from '@material-design-icons/svg/two-tone/replay.svg?react';
 import { List, Task } from '../data-models/interfaces';
 import { updateTaskTimerInList } from '../utilities/state';
-import worker_script from '../timeWorker';
+import timeWorkerScript from '../workers/timeWorker';
+import notificationWorkerScript from '../workers/notificationWorker';
 
 interface TimerProps {
     currentList: string;
@@ -26,22 +27,18 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, task }) => {
     const notification = () => {
         // Check if the browser supports notifications.
         if ('Notification' in window) {
+            // If it's okay let's send a message to the notification worker.
+            const notificationWorker = new Worker(notificationWorkerScript);
             // Check if the user has granted permission to show notifications.
             if (Notification.permission === 'granted') {
-                // If it's okay let's create a notification.
-                new Notification('Timer is up!', {
-                    body: 'This is a notification message.',
-                    icon: 'path/to/icon.png', // Optional icon
-                });
+                // If it's okay let's send a message to the notification worker.
+                notificationWorker.postMessage('notification');
             } else {
                 // Otherwise, we need to ask the user for permission.
                 Notification.requestPermission().then(function (permission) {
-                    // If the user accepts, let's create a notification.
+                    // If the user accepts, let's send a notification.
                     if (permission === 'granted') {
-                        new Notification('Timer is up!', {
-                            body: 'This is a notification message.',
-                            icon: 'path/to/icon.png', // Optional icon
-                        });
+                        notificationWorker.postMessage('notification');
                     }
                 });
             }
@@ -77,7 +74,7 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, task }) => {
     }, [elapsedTime, isRunning]);
 
     useEffect(() => {
-        const timeWorker = new Worker(worker_script);
+        const timeWorker = new Worker(timeWorkerScript);
         if (isRunning) {
             timeWorker.onmessage = (m) => {
                 setElapsedTime(m.data);
