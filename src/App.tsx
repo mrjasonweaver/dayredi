@@ -12,9 +12,9 @@ const initialTasks: Task[] = [
         id: initialTaskId,
         name: 'My first task.',
         completed: false,
-        displayTime: '00:00:01',
+        displayTime: '00:10:00',
         timestamp: new Date().getTime(),
-        timer: 1, // 1 second.
+        timer: 10 * 60, // 10 minutes.
     },
 ];
 

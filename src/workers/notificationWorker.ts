@@ -4,13 +4,11 @@
 // Listen for messages from the main thread.
 const startNotificationWorker = () => {
     self.onmessage = function (e) {
-        if (e.data === 'notification') {
+        if (e.data.type === 'notification') {
             // Send a notification to the user.
-            const notification = new Notification('Timer is up!', {
-                body: 'This is a notification message.',
-                icon: 'path/to/icon.png', // Optional icon
+            const notification = new Notification(e.data.title, {
+                body: e.data.body,
             });
-            console.log('Notification sent.');
         }
     };
 }
