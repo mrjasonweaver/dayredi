@@ -29,14 +29,19 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, task }) => {
             // Check if the user has granted permission to show notifications.
             if (Notification.permission === 'granted') {
                 // If it's okay let's create a notification.
-                new Notification('Timer is up!');
-                console.log('Notification sent!');
+                new Notification('Timer is up!', {
+                    body: 'This is a notification message.',
+                    icon: 'path/to/icon.png', // Optional icon
+                });
             } else {
                 // Otherwise, we need to ask the user for permission.
                 Notification.requestPermission().then(function (permission) {
                     // If the user accepts, let's create a notification.
                     if (permission === 'granted') {
-                        new Notification('Timer is up!');
+                        new Notification('Timer is up!', {
+                            body: 'This is a notification message.',
+                            icon: 'path/to/icon.png', // Optional icon
+                        });
                     }
                 });
             }

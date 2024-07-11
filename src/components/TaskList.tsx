@@ -35,7 +35,7 @@ const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => 
     const totalMinutes = () => {
         const minutes = Math.floor((totalTimeInSeconds / oneMinuteInSeconds) % oneMinuteInSeconds);
         if (minutes > 0) {
-            return `${minutes} minute${minutes > 1 ? 's' : ''}`;
+            return `${minutes} min${minutes > 1 ? 's' : ''}`;
         } else {
             return '';
         }
@@ -45,7 +45,7 @@ const TaskList: React.FC<TaskListProps> = ({ lists, setLists, currentList }) => 
     const totalHours = () => {
         const hours = Math.floor(totalTimeInSeconds / oneHourInSeconds);
         if (hours > 0) {
-            return `${hours} hour${hours > 1 ? 's' : ''}`;
+            return `${hours} hr${hours > 1 ? 's' : ''}`;
         } else {
             return '';
         }
