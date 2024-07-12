@@ -1,3 +1,10 @@
+/**
+ * This worker is responsible for sending the elapsed time to the main thread.
+ * This worker will listen for messages from the main thread.
+ * When it receives a message, it will start a timer and send the elapsed time to the main thread.
+ */
+import createWorkerScript from './createWorkerScript';
+
 const timeWorker = () => {
 
     self.onmessage = function () {
@@ -13,10 +20,6 @@ const timeWorker = () => {
     }
 };
 
-let code = timeWorker.toString();
-code = code.substring(code.indexOf("{")+1, code.lastIndexOf("}"));
-
-const blob = new Blob([code], {type: "application/javascript"});
-const timeWorkerScript = URL.createObjectURL(blob);
+const timeWorkerScript = createWorkerScript(timeWorker.toString());
 
 export default timeWorkerScript;
