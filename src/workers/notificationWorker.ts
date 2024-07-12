@@ -11,7 +11,7 @@ const startNotificationWorker = () => {
     self.onmessage = function (e) {
         if (e.data.type === 'notification') {
             // Send a notification to the user.
-            const notification = new Notification(e.data.title, {
+            new Notification(e.data.title, {
                 body: e.data.body,
             });
         }
