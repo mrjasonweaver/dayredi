@@ -6,7 +6,7 @@ import Replay from '@material-design-icons/svg/two-tone/replay.svg?react';
 import { List, Task } from '../data-models/interfaces';
 import { updateTaskTimerInList } from '../utilities/state';
 import timeWorkerScript from '../workers/timeWorker';
-import notificationWorkerScript from '../workers/notificationWorker';
+import { notification } from '../utilities/notification';
 
 interface TimerProps {
     currentList: string;
@@ -22,45 +22,16 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, task }) => {
     const [elapsedTime, setElapsedTime] = useState(0);
 
     /**
-     * Let's use the notification API to notify the user when the timer reaches 0.
-     */
-    const notification = () => {
-        // Check if the browser supports notifications.
-        if ('Notification' in window) {
-            // If it's okay let's send a message to the notification worker.
-            const notificationWorker = new Worker(notificationWorkerScript);
-            // Check if the user has granted permission to show notifications.
-            if (Notification.permission === 'granted') {
-                // If it's okay let's send a message to the notification worker.
-                notificationWorker.postMessage({
-                    type: 'notification',
-                    title: 'Timer is up!',
-                    body: `Your timer for "${task.name}" is up!`,
-                });
-            } else {
-                // Otherwise, we need to ask the user for permission.
-                Notification.requestPermission().then(function (permission) {
-                    // If the user accepts, let's send a notification.
-                    if (permission === 'granted') {
-                        notificationWorker.postMessage('notification');
-                    }
-                });
-            }
-        }
-    };
-
-    /**
      * When countdown reaches 0, we need to stop the timer.
      * Else we need to update the Lists state.
-     * @todo: We need to add a end timer sound.
-     * @todo: We need to add a notification.
+     * @todo: We need to add an end timer sound.
      */
     useEffect(() => {
         if (countdown === 0) {
             setIsRunning((prev) => prev && false);
             // TODO: Add a sound.
             // Add a notification using the Notification API.
-            notification();
+            notification(task);
         }
 
         setLists((prevLists: List[]) => {
