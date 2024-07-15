@@ -27,10 +27,14 @@ const initialList: List[] = [
 ];
 
 // Get the inital List from local storage if it exists.
-const localList: List[] = JSON.parse(localStorage.getItem('list-timer-app') || '[]');
+const localList: List[] = JSON.parse(
+    localStorage.getItem('list-timer-app') || '[]',
+);
 
 function App() {
-    const [lists, setLists] = useState<List[]>(localList.length ? localList : initialList);
+    const [lists, setLists] = useState<List[]>(
+        localList.length ? localList : initialList,
+    );
     const [currentList] = useState<string>(initialListId);
     const title = 'Dayredi';
     const description = 'A time blocking task manager.';

@@ -18,7 +18,11 @@ interface AddTaskProps {
  * @returns The AddNewTask component.
  * @return {JSX.Element}
  */
-const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList, title }) => {
+const AddNewTask: React.FC<AddTaskProps> = ({
+    setLists,
+    currentList,
+    title,
+}) => {
     const [name, setName] = useState('');
     const [timerMinutes, setTimerMinutes] = useState(0);
     const [timer, setTimer] = useState(0);
@@ -53,7 +57,9 @@ const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList, title }) =>
      * @param event The input change event.
      * @return {void}
      */
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const handleInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ): void => {
         // We need to strip out anything that is not a letter or number.
         // Exclamation mark and period is allowed.
         const regex = /[^a-zA-Z0-9! .]/g;
@@ -67,7 +73,9 @@ const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList, title }) =>
      * @return {void}
      * @description Set the timer state in minutes and seconds.
      */
-    const handleSetTimer = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const handleSetTimer = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ): void => {
         setTimerMinutes(parseInt(event.target.value));
 
         // Convert timer minutes to seconds.
@@ -92,12 +100,17 @@ const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList, title }) =>
      * @param event The key down event.
      * @return {void}
      */
-    const handleAddOnEnter = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+    const handleAddOnEnter = (
+        event: React.KeyboardEvent<HTMLInputElement>,
+    ): void => {
         if (event.key === 'Enter') {
             if (event.currentTarget.id === 'task-name' && timer === 0) {
                 taskTimerRef.current?.focus(); // Move the focus to the timer input.
                 return;
-            } else if (event.currentTarget.id === 'task-timer' && name.trim() === '') {
+            } else if (
+                event.currentTarget.id === 'task-timer' &&
+                name.trim() === ''
+            ) {
                 taskNameRef.current?.focus(); // Move the focus to the name input.
                 return;
             }

@@ -28,14 +28,19 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, task }) => {
      */
     useEffect(() => {
         if (countdown === 0) {
-            setIsRunning((prev) => prev && false);
+            setIsRunning(prev => prev && false);
             // TODO: Add a sound.
             // Add a notification using the Notification API.
             notification(task);
         }
 
         setLists((prevLists: List[]) => {
-            return updateTaskTimerInList(currentList, prevLists, task.id, countdown);
+            return updateTaskTimerInList(
+                currentList,
+                prevLists,
+                task.id,
+                countdown,
+            );
         });
     }, [countdown]);
 
@@ -44,14 +49,14 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, task }) => {
      */
     useEffect(() => {
         if (isRunning) {
-            setCountdown((prevCount) => prevCount - 1);
+            setCountdown(prevCount => prevCount - 1);
         }
     }, [elapsedTime, isRunning]);
 
     useEffect(() => {
         const timeWorker = new Worker(timeWorkerScript);
         if (isRunning) {
-            timeWorker.onmessage = (m) => {
+            timeWorker.onmessage = m => {
                 setElapsedTime(m.data);
             };
             timeWorker.postMessage('start');
@@ -66,7 +71,11 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, task }) => {
 
     return (
         <div className="timer-controls">
-            <p className={`timer-display${isRunning ? ' active' : ''}${countdown === 0 ? ' countdown-zero' : ''}`}>
+            <p
+                className={`timer-display${isRunning ? ' active' : ''}${
+                    countdown === 0 ? ' countdown-zero' : ''
+                }`}
+            >
                 {task.displayTime}
             </p>
             <div className="timer-display-controls">
@@ -93,7 +102,9 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, task }) => {
                 <button
                     title="Add five minutes"
                     className="text-icon-button"
-                    onClick={() => setCountdown(countdown + fiveMinutesInSeconds)}
+                    onClick={() =>
+                        setCountdown(countdown + fiveMinutesInSeconds)
+                    }
                 >
                     +5
                 </button>

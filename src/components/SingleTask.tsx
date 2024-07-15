@@ -113,7 +113,9 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
                     />
                     <button
                         title="Done"
-                        className={`w-icon done-icon${task.completed ? ' completed' : ''}`}
+                        className={`w-icon done-icon${
+                            task.completed ? ' completed' : ''
+                        }`}
                         onClick={handleCompleteChange}
                     >
                         <Check />
@@ -125,7 +127,9 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
                     <div className="task-completed-wrap">
                         <button
                             title="Add back to incomplete tasks"
-                            className={`w-icon${task.completed ? ' completed' : ''}`}
+                            className={`w-icon${
+                                task.completed ? ' completed' : ''
+                            }`}
                             onClick={handleCompleteChange}
                         >
                             <Check />
@@ -134,7 +138,10 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
                             <strong>{name}</strong>
                         </p>
                         <span>
-                            {formatDistance(task.timestamp, new Date(), { addSuffix: true, includeSeconds: true })}
+                            {formatDistance(task.timestamp, new Date(), {
+                                addSuffix: true,
+                                includeSeconds: true,
+                            })}
                         </span>
                     </div>
                     <button
