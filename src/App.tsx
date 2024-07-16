@@ -6,6 +6,7 @@ import { List, Task } from './data-models/interfaces';
 
 const initialListId: string = 'list1';
 const initialTaskId: string = 'task1';
+const initialTimer: number = 10 * 60; // 10 minutes.
 
 const initialTasks: Task[] = [
     {
@@ -14,7 +15,8 @@ const initialTasks: Task[] = [
         completed: false,
         displayTime: '00:10:00',
         timestamp: new Date().getTime(),
-        timer: 10 * 60, // 10 minutes.
+        timerStart: initialTimer,
+        timer: initialTimer,
     },
 ];
 

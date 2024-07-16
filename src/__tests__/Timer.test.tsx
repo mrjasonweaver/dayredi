@@ -15,6 +15,7 @@ describe('renders Timer component', () => {
                     completed: false,
                     displayTime: '00:00:00',
                     timer: 10,
+                    timerStart: 0,
                     timestamp: Date.now(),
                 }}
             />,

@@ -43,6 +43,7 @@ const AddNewTask: React.FC<AddTaskProps> = ({
             completed: false,
             displayTime: convertSecondsToDisplayTime(timer),
             timer: timer,
+            timerStart: timer,
             timestamp: new Date().getTime(),
         };
 

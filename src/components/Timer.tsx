@@ -16,7 +16,6 @@ interface TimerProps {
 
 const Timer: React.FC<TimerProps> = ({ currentList, setLists, task }) => {
     const fiveMinutesInSeconds = 300;
-    const [timerStart] = useState(task.timer);
     const [countdown, setCountdown] = useState(task.timer);
     const [isRunning, setIsRunning] = useState(false);
     const [elapsedTime, setElapsedTime] = useState(0);
@@ -113,7 +112,7 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, task }) => {
                 <button
                     title="Replay timer"
                     className="w-icon replay-icon"
-                    onClick={() => setCountdown(timerStart)}
+                    onClick={() => setCountdown(task.timerStart)}
                 >
                     <Replay />
                 </button>

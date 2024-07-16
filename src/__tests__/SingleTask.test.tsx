@@ -17,6 +17,7 @@ describe('SingleTask', () => {
                     completed: false,
                     displayTime: '00:00:00',
                     timestamp: new Date().getTime(),
+                    timerStart: 0,
                     timer: 0,
                 }}
             />,

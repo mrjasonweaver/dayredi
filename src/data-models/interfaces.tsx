@@ -10,6 +10,7 @@ interface Task {
     completed: boolean;
     displayTime: string;
     timer: number;
+    timerStart: number;
     timestamp: number;
 }
 
