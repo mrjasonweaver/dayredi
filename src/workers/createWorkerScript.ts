@@ -8,16 +8,13 @@ const createWorkerScript = (functionString: string) => {
     const blob = new Blob([functionString], { type: "application/javascript" });
 
     // Create an object URL for the blob.
-    const noOp = () => { };
+    const noOp = () => {};
     if (typeof window.URL.createObjectURL === 'undefined') { 
         Object.defineProperty(window.URL, 'createObjectURL', { value: noOp });
     }
 
     const url = window.URL.createObjectURL(blob);
-
-    if (typeof url !== 'undefined') {
-        return window.URL.createObjectURL(blob);
-    }
+    return url;
 
 };
 
