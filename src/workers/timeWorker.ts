@@ -20,6 +20,6 @@ const timeWorker = () => {
     }
 };
 
-const timeWorkerScript = createWorkerScript(timeWorker.toString());
+const timeWorkerScript: string | undefined = createWorkerScript(timeWorker.toString());
 
 export default timeWorkerScript;

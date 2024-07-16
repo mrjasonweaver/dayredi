@@ -54,19 +54,21 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, task }) => {
     }, [elapsedTime, isRunning]);
 
     useEffect(() => {
-        const timeWorker = new Worker(timeWorkerScript);
-        if (isRunning) {
-            timeWorker.onmessage = m => {
-                setElapsedTime(m.data);
-            };
-            timeWorker.postMessage('start');
-        } else {
-            timeWorker.terminate();
-        }
+        if (typeof Worker !== 'undefined') {
+            const timeWorker = new Worker(timeWorkerScript);
+            if (isRunning) {
+                timeWorker.onmessage = m => {
+                    setElapsedTime(m.data);
+                };
+                timeWorker.postMessage('start');
+            } else {
+                timeWorker.terminate();
+            }
 
-        return () => {
-            timeWorker.terminate();
-        };
+            return () => {
+                timeWorker.terminate();
+            };
+        }
     }, [isRunning]);
 
     return (

@@ -15,6 +15,7 @@ describe('SingleTask', () => {
                     id: 'task1',
                     name: 'My fist task.',
                     completed: false,
+                    displayTime: '00:00:00',
                     timestamp: new Date().getTime(),
                     timer: 0,
                 }}
