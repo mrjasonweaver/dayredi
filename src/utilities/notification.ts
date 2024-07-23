@@ -13,11 +13,12 @@ export const notification = (task: Task) => {
         // Check if the user has granted permission to show notifications.
         if (Notification.permission === 'granted') {
             // If it's okay let's send a message to the notification worker.
-            notificationWorker.postMessage({
+            const data = {
                 type: 'notification',
                 title: 'Timer is up!',
                 body: `Your timer for "${task.name}" is up!`,
-            });
+            };
+            notificationWorker.postMessage(data);
         } else {
             // Otherwise, we need to ask the user for permission.
             Notification.requestPermission().then(function (permission) {
