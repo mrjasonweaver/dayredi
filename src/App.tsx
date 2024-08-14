@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './App.css';
 import TaskList from './components/TaskList';
 import AddNewTask from './components/AddNewTask';
-import { List, Task } from './data-models/interfaces';
+import { List, Task } from './data-models/types';
 
 const initialListId: string = 'list1';
 const initialTaskId: string = 'task1';

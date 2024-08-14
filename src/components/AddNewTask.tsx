@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { List } from '../data-models/interfaces';
+import { List } from '../data-models/types';
 import { addTaskToList } from '../utilities/state';
 import AddTask from '@material-design-icons/svg/two-tone/add_task.svg?react';
 import { convertSecondsToDisplayTime } from '../utilities/timeUtils';

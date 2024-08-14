@@ -10,6 +10,8 @@ describe('createWorkerScript', () => {
         global.URL.createObjectURL = vi.fn();
         const functionString = 'function test() { console.log("test"); }';
         const workerScript = createWorkerScript(functionString);
+
+        console.log(workerScript);
        
         // Create spy for URL.createObjectURL
         expect(global.URL.createObjectURL).toHaveBeenCalled();

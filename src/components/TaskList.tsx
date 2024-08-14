@@ -1,6 +1,6 @@
 import React from 'react';
 import SingleTask from './SingleTask';
-import { List, Task } from '../data-models/interfaces';
+import { List, Task } from '../data-models/types';
 import { deleteCompletedTasks } from '../utilities/state';
 import DeleteSweep from '@material-design-icons/svg/two-tone/delete_sweep.svg?react';
 import Snooze from '@material-design-icons/svg/round/snooze.svg?react';

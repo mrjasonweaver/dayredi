@@ -1,10 +1,10 @@
-interface List {
+type List = {
     id: string;
     name: string;
     tasks: Task[];
-}
+};
 
-interface Task {
+type Task = {
     id: string;
     name: string;
     completed: boolean;
@@ -12,6 +12,6 @@ interface Task {
     timer: number;
     timerStart: number;
     timestamp: number;
-}
+};
 
 export type { List, Task };

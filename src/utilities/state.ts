@@ -1,4 +1,4 @@
-import { List, Task } from '../data-models/interfaces';
+import { List, Task } from '../data-models/types';
 import { convertSecondsToDisplayTime } from './timeUtils';
 
 /**

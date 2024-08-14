@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Play from '@material-design-icons/svg/two-tone/play_arrow.svg?react';
 import Pause from '@material-design-icons/svg/two-tone/pause.svg?react';
 import Replay from '@material-design-icons/svg/two-tone/replay.svg?react';
-import { List, Task } from '../data-models/interfaces';
+import { List, Task } from '../data-models/types';
 import { updateTaskTimerInList } from '../utilities/state';
 import timeWorkerScript from '../workers/timeWorker';
 import { notification } from '../utilities/notification';

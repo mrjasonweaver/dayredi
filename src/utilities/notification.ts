@@ -1,5 +1,5 @@
 import notificationWorkerScript from '../workers/notificationWorker';
-import { Task } from '../data-models/interfaces';
+import { Task } from '../data-models/types';
 
 /**
  * Let's use the notification API to notify the user when the timer reaches 0.

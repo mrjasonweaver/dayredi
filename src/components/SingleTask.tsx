@@ -1,6 +1,6 @@
 /// <reference types="vite-plugin-svgr/client" />
 import { useState } from 'react';
-import { List, Task } from '../data-models/interfaces';
+import { List, Task } from '../data-models/types';
 import { formatDistance } from 'date-fns';
 import Delete from '@material-design-icons/svg/two-tone/delete.svg?react';
 import Check from '@material-design-icons/svg/two-tone/check.svg?react';
