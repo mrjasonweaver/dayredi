@@ -12,6 +12,7 @@ export default {
     react(),
     svgr(),
   ],
+  base: '/',
   server: detectServerConfig(host),
   test: {
     environment: 'jsdom',
