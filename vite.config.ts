@@ -5,8 +5,6 @@ import { homedir } from 'os';
 import { resolve } from 'path';
 import fs from 'fs';
 
-// If the env is production, we need to use the production host. Ex: dayredi.com
-// If the env is development, we need to use the development host
 const host =
     process.env.NODE_ENV === 'production' ? 'dayredi.com' : 'dayredi.test';
 
