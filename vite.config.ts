@@ -22,6 +22,7 @@ export default {
 };
 
 function detectServerConfig(host: string) {
+    console.debug('host', host);
     if (host === 'dayredi.test') {
         const keyPath = resolve(
             homedir(),

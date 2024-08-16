@@ -359,6 +359,12 @@ input[type='number'] {
     #task-timer {
         border: 2px solid rgba(0, 0, 0, 0.1);
         background: white;
+        
+        &:focus,
+        &:focus-visible {
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            background: rgba(200, 200, 200, 0.2);
+        }
     }
 
     input[type='text'],
@@ -367,6 +373,11 @@ input[type='number'] {
 
         &::placeholder {
             color: rgba(0, 0, 0, 0.5);
+        }
+        &:focus,
+        &:focus-visible {
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            background: rgba(200, 200, 200, 0.2);
         }
     }
 }
