@@ -1,28 +1,28 @@
-#root,
-header {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+#root {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
 }
 
-header {
-  padding-top: 0;
-  padding-bottom: 0;
-  position: fixed;
-  left: auto;
-  right: auto;
+.site-header {
+    position: sticky;
+    top: 1em;
+    width: 100%;
+    padding: 0;
 }
 
 .card {
-  padding: 2em;
+    @media screen and (max-width: 900px) {
+        padding: 2em 0;
+    }
 }
 
 .read-the-docs {
-  color: #888;
+    color: #888;
 }
 
 .list-wrap {
-padding-top: 100px;
-padding-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }

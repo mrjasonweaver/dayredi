@@ -205,11 +205,11 @@ input[type='number'] {
     border: 2px solid #232323;
     background: #1d1d1d;
 
-        &:focus,
-        &:focus-visible {
-            border: 2px solid #5e5e5e;
-            background: #1d1d1d;
-        }
+    &:focus,
+    &:focus-visible {
+        border: 2px solid #5e5e5e;
+        background: #1d1d1d;
+    }
 }
 
 .add-task {
@@ -229,6 +229,14 @@ input[type='number'] {
         gap: 1em;
         align-items: center;
         justify-content: center;
+
+        @media screen and (max-width: 900px) {
+            flex-direction: column;
+        }
+    }
+
+    @media screen and (max-width: 900px) {
+        flex-direction: column;
     }
 }
 
@@ -244,6 +252,12 @@ input[type='number'] {
     align-items: center;
     justify-content: space-between;
     gap: 1em;
+}
+
+.task {
+    @media screen and (max-width: 900px) {
+        flex-direction: column;
+    }
 }
 
 .timer-controls {
@@ -359,7 +373,7 @@ input[type='number'] {
     #task-timer {
         border: 2px solid rgba(0, 0, 0, 0.1);
         background: white;
-        
+
         &:focus,
         &:focus-visible {
             border: 2px solid rgba(0, 0, 0, 0.2);
