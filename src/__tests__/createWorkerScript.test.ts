@@ -11,11 +11,9 @@ describe('createWorkerScript', () => {
         const functionString = 'function test() { console.log("test"); }';
         const workerScript = createWorkerScript(functionString);
 
-        console.log(workerScript);
-       
+        console.debug(workerScript);
+
         // Create spy for URL.createObjectURL
         expect(global.URL.createObjectURL).toHaveBeenCalled();
-
-
     });
 });
