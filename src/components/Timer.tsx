@@ -12,12 +12,13 @@ interface TimerProps {
     currentList: string;
     setLists: React.Dispatch<React.SetStateAction<List[]>>;
     task: Task;
+    isRunning: boolean;
+    setIsRunning: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Timer: React.FC<TimerProps> = ({ currentList, setLists, task }) => {
+const Timer: React.FC<TimerProps> = ({ currentList, setLists, task, isRunning, setIsRunning }) => {
     const fiveMinutesInSeconds = 300;
     const [countdown, setCountdown] = useState(task.timer);
-    const [isRunning, setIsRunning] = useState(false);
     const [elapsedTime, setElapsedTime] = useState(0);
 
     /**

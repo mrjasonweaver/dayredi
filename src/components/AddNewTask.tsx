@@ -15,14 +15,11 @@ interface AddTaskProps {
  * AddNewTask component to add a new task to the current list.
  * @param setLists The setLists function to update the lists state.
  * @param currentList The current list id.
+ * @param title The title of the task.
  * @returns The AddNewTask component.
  * @return {JSX.Element}
  */
-const AddNewTask: React.FC<AddTaskProps> = ({
-    setLists,
-    currentList,
-    title,
-}) => {
+const AddNewTask: React.FC<AddTaskProps> = ({ setLists, currentList, title }) => {
     const [name, setName] = useState('');
     const [timerMinutes, setTimerMinutes] = useState(0);
     const [timer, setTimer] = useState(0);

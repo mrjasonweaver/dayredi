@@ -1,5 +1,5 @@
 /// <reference types="vite-plugin-svgr/client" />
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { List, Task } from '../data-models/types';
 import { formatDistance } from 'date-fns';
 import Delete from '@material-design-icons/svg/two-tone/delete.svg?react';
@@ -16,6 +16,7 @@ interface TaskProps {
 
 const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
     const [currentName, setCurrentName] = useState('');
+    const [isRunning, setIsRunning] = useState(false);
 
     const taskId: string = task.id;
     const name: string = task.name;
@@ -40,6 +41,10 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
      * @description Update the current task's completed status.
      */
     const handleCompleteChange = () => {
+
+        // Stop the timer because we're done with the task
+        setIsRunning(false);
+
         // Update the task's completed
         const updatedTask = {
             ...task,
@@ -110,6 +115,8 @@ const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
                         currentList={currentList}
                         setLists={setLists}
                         task={task}
+                        isRunning={isRunning}
+                        setIsRunning={setIsRunning}
                     />
                     <button
                         title="Done"
