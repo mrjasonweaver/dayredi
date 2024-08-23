@@ -8,7 +8,8 @@ describe('renders Timer component', () => {
         render(
             <Timer
                 currentList={'list1'}
-                setLists={() => {}}
+                setLists={() => {
+                }}
                 task={{
                     id: 'task1',
                     name: 'Task 1',
@@ -17,6 +18,9 @@ describe('renders Timer component', () => {
                     timer: 10,
                     timerStart: 0,
                     timestamp: Date.now(),
+                }}
+                isRunning={false}
+                setIsRunning={() => {
                 }}
             />,
         );
