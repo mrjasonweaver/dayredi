@@ -65,7 +65,7 @@ body {
 .logo {
     font-size: 12px;
     text-indent: -9999px;
-    background-image: url(../images/dayredi.webp);
+    background-image: url('../images/dayredi.webp');
     background-repeat: no-repeat;
 }
 
