@@ -21,7 +21,7 @@ export const notification = (task: Task) => {
             notificationWorker.postMessage(data);
         } else {
             // Otherwise, we need to ask the user for permission.
-            Notification.requestPermission().then(function (permission) {
+            Notification.requestPermission().then(function(permission) {
                 // If the user accepts, let's send a notification.
                 if (permission === 'granted') {
                     notificationWorker.postMessage('notification');
