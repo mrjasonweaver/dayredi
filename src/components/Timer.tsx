@@ -74,9 +74,8 @@ const Timer: React.FC<TimerProps> = ({ currentList, setLists, task, isRunning, s
     return (
         <div className="timer-controls">
             <p
-                className={`timer-display${isRunning ? ' active' : ''}${
-                    countdown === 0 ? ' countdown-zero' : ''
-                }`}
+                className={`timer-display${isRunning ? ' active' : ''}${countdown === 0 ? ' countdown-zero' : ''
+                    }`}
             >
                 {task.displayTime}
             </p>
