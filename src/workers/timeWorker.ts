@@ -7,17 +7,17 @@ import createWorkerScript from './createWorkerScript';
 
 const timeWorker = () => {
 
-    self.onmessage = function () {
-        const oneSecond = 1000; // 1000 milliseconds = 1 second.
-        const start = Date.now();
-        const updateCountdown = () => {
-            const elapsed = Date.now() - start;
-            const elapsedTime = Math.floor(elapsed / oneSecond);
-            self.postMessage(elapsedTime);
-        };
+  self.onmessage = function() {
+    const oneSecond = 1000; // 1000 milliseconds = 1 second.
+    const start = Date.now();
+    const updateCountdown = () => {
+      const elapsed = Date.now() - start;
+      const elapsedTime = Math.floor(elapsed / oneSecond);
+      self.postMessage(elapsedTime);
+    };
 
-        setInterval(updateCountdown, oneSecond);
-    }
+    setInterval(updateCountdown, oneSecond);
+  }
 };
 
 const timeWorkerScript = createWorkerScript(timeWorker.toString());

@@ -8,158 +8,158 @@ import Timer from './Timer';
 import { updateTaskInList, deleteTaskFromList } from '../utilities/state';
 
 interface TaskProps {
-    lists: List[];
-    setLists: React.Dispatch<React.SetStateAction<List[]>>;
-    currentList: string;
-    task: Task;
+  lists: List[];
+  setLists: React.Dispatch<React.SetStateAction<List[]>>;
+  currentList: string;
+  task: Task;
 }
 
 const SingleTask: React.FC<TaskProps> = ({ setLists, currentList, task }) => {
-    const [currentName, setCurrentName] = useState('');
-    const [isRunning, setIsRunning] = useState(false);
+  const [currentName, setCurrentName] = useState('');
+  const [isRunning, setIsRunning] = useState(false);
 
-    const taskId: string = task.id;
-    const name: string = task.name;
+  const taskId: string = task.id;
+  const name: string = task.name;
 
-    /**
-     * Handle the title change event.
-     * @param event The title change event.
-     * @returns void
-     * @description Update the current task's name.
-     */
-    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // We need to strip out anything that is not a letter or number.
-        // Exclamation mark and period is allowed.
-        const regex = /[^a-zA-Z0-9! .]/g;
-        const newName = event.target.value.replace(regex, '');
-        setCurrentName(newName);
+  /**
+   * Handle the title change event.
+   * @param event The title change event.
+   * @returns void
+   * @description Update the current task's name.
+   */
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // We need to strip out anything that is not a letter or number.
+    // Exclamation mark and period is allowed.
+    const regex = /[^a-zA-Z0-9! .]/g;
+    const newName = event.target.value.replace(regex, '');
+    setCurrentName(newName);
+  };
+
+  /**
+   * Update the current task's completed status for the currentList.
+   * @returns void
+   * @description Update the current task's completed status.
+   */
+  const handleCompleteChange = () => {
+
+    // Stop the timer because we're done with the task
+    setIsRunning(false);
+
+    // Update the task's completed
+    const updatedTask = {
+      ...task,
+      completed: !task.completed,
+      timestamp: new Date().getTime(),
     };
 
-    /**
-     * Update the current task's completed status for the currentList.
-     * @returns void
-     * @description Update the current task's completed status.
-     */
-    const handleCompleteChange = () => {
+    // Update Lists state and local storage.
+    setLists((prevLists: List[]) => {
+      return updateTaskInList(currentList, prevLists, updatedTask);
+    });
+  };
 
-        // Stop the timer because we're done with the task
-        setIsRunning(false);
-
-        // Update the task's completed
-        const updatedTask = {
-            ...task,
-            completed: !task.completed,
-            timestamp: new Date().getTime(),
-        };
-
-        // Update Lists state and local storage.
-        setLists((prevLists: List[]) => {
-            return updateTaskInList(currentList, prevLists, updatedTask);
-        });
+  /**
+   * Update the current task's name for the currentList.
+   */
+  const updateTaskName = () => {
+    // Update the task's name
+    const updatedTask = {
+      ...task,
+      name: currentName,
     };
 
-    /**
-     * Update the current task's name for the currentList.
-     */
-    const updateTaskName = () => {
-        // Update the task's name
-        const updatedTask = {
-            ...task,
-            name: currentName,
-        };
+    // Update Lists state and local storage.
+    setLists((prevLists: List[]) => {
+      return updateTaskInList(currentList, prevLists, updatedTask);
+    });
+  };
 
-        // Update Lists state and local storage.
-        setLists((prevLists: List[]) => {
-            return updateTaskInList(currentList, prevLists, updatedTask);
-        });
-    };
+  /**
+   * Handle the name keypress event.
+   * @param event The keyboard event.
+   * @returns void
+   * @description Update the task name if the keypress is Enter.
+   */
+  const handleNameSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    // Update if keypress is Enter.
+    if (event.key === 'Enter') {
+      updateTaskName();
+    }
+  };
 
-    /**
-     * Handle the name keypress event.
-     * @param event The keyboard event.
-     * @returns void
-     * @description Update the task name if the keypress is Enter.
-     */
-    const handleNameSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        // Update if keypress is Enter.
-        if (event.key === 'Enter') {
-            updateTaskName();
-        }
-    };
+  /**
+   * Handle the delete task event.
+   * @returns void
+   */
+  const handleDeleteTask = () => {
+    // Update Lists state and local storage.
+    setLists((prevLists: List[]) => {
+      return deleteTaskFromList(currentList, prevLists, taskId);
+    });
+  };
 
-    /**
-     * Handle the delete task event.
-     * @returns void
-     */
-    const handleDeleteTask = () => {
-        // Update Lists state and local storage.
-        setLists((prevLists: List[]) => {
-            return deleteTaskFromList(currentList, prevLists, taskId);
-        });
-    };
-
-    return (
-        <div className={`task${task.completed ? ' completed' : ''}`}>
-            {!task.completed && (
-                <>
-                    <input
-                        type="text"
-                        value={currentName || name}
-                        placeholder="Enter a task description."
-                        className="name-input"
-                        id={taskId}
-                        onChange={handleNameChange}
-                        onKeyDownCapture={handleNameSubmit}
-                    />
-                    <Timer
-                        currentList={currentList}
-                        setLists={setLists}
-                        task={task}
-                        isRunning={isRunning}
-                        setIsRunning={setIsRunning}
-                    />
-                    <button
-                        title="Done"
-                        className={`w-icon done-icon${task.completed ? ' completed' : ''
-                            }`}
-                        onClick={handleCompleteChange}
-                    >
-                        <Check />
-                    </button>
-                </>
-            )}
-            {task.completed && (
-                <>
-                    <div className="task-completed-wrap">
-                        <button
-                            title="Add back to incomplete tasks"
-                            className={`w-icon${task.completed ? ' completed' : ''
-                                }`}
-                            onClick={handleCompleteChange}
-                        >
-                            <Check />
-                        </button>
-                        <p>
-                            <strong>{name}</strong>
-                        </p>
-                        <span>
-                            {formatDistance(task.timestamp, new Date(), {
-                                addSuffix: true,
-                                includeSeconds: true,
-                            })}
-                        </span>
-                    </div>
-                    <button
-                        className="w-icon delete-icon"
-                        title="Delete task"
-                        onClick={handleDeleteTask}
-                    >
-                        <Delete />
-                    </button>
-                </>
-            )}
-        </div>
-    );
+  return (
+    <div className={`task${task.completed ? ' completed' : ''}`}>
+      {!task.completed && (
+        <>
+          <input
+            type="text"
+            value={currentName || name}
+            placeholder="Enter a task description."
+            className="name-input"
+            id={taskId}
+            onChange={handleNameChange}
+            onKeyDownCapture={handleNameSubmit}
+          />
+          <Timer
+            currentList={currentList}
+            setLists={setLists}
+            task={task}
+            isRunning={isRunning}
+            setIsRunning={setIsRunning}
+          />
+          <button
+            title="Done"
+            className={`w-icon done-icon${task.completed ? ' completed' : ''
+              }`}
+            onClick={handleCompleteChange}
+          >
+            <Check />
+          </button>
+        </>
+      )}
+      {task.completed && (
+        <>
+          <div className="task-completed-wrap">
+            <button
+              title="Add back to incomplete tasks"
+              className={`w-icon${task.completed ? ' completed' : ''
+                }`}
+              onClick={handleCompleteChange}
+            >
+              <Check />
+            </button>
+            <p>
+              <strong>{name}</strong>
+            </p>
+            <span>
+              {formatDistance(task.timestamp, new Date(), {
+                addSuffix: true,
+                includeSeconds: true,
+              })}
+            </span>
+          </div>
+          <button
+            className="w-icon delete-icon"
+            title="Delete task"
+            onClick={handleDeleteTask}
+          >
+            <Delete />
+          </button>
+        </>
+      )}
+    </div>
+  );
 };
 
 export default SingleTask;

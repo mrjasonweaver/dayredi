@@ -8,14 +8,14 @@ import createWorkerScript from './createWorkerScript';
 
 // Listen for messages from the main thread.
 const startNotificationWorker = () => {
-    self.onmessage = function (e) {
-        if (e.data.type === 'notification') {
-            // Send a notification to the user.
-            new Notification(e.data.title, {
-                body: e.data.body,
-            });
-        }
-    };
+  self.onmessage = function(e) {
+    if (e.data.type === 'notification') {
+      // Send a notification to the user.
+      new Notification(e.data.title, {
+        body: e.data.body,
+      });
+    }
+  };
 }
 
 const notificationWorkerScript = createWorkerScript(startNotificationWorker.toString());

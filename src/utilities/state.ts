@@ -10,26 +10,26 @@ import { convertSecondsToDisplayTime } from './timeUtils';
  */
 export const updateTaskInList = (currentList: string, prevLists: List[], updatedTask: Task): List[] => {
 
-    // Update the currentList's tasks with the updated task.
-    const newList = prevLists.map((list: List) => {
-        if (list.id === currentList) {
-            return {
-                ...list,
-                tasks: list.tasks.map((t: Task) => {
-                    if (t.id === updatedTask.id) {
-                        return updatedTask;
-                    }
-                    return t;
-                }),
-            };
-        }
-        return list;
-    });
+  // Update the currentList's tasks with the updated task.
+  const newList = prevLists.map((list: List) => {
+    if (list.id === currentList) {
+      return {
+        ...list,
+        tasks: list.tasks.map((t: Task) => {
+          if (t.id === updatedTask.id) {
+            return updatedTask;
+          }
+          return t;
+        }),
+      };
+    }
+    return list;
+  });
 
-    // Update the local storage.
-    localStorage.setItem('list-timer-app', JSON.stringify(newList));
+  // Update the local storage.
+  localStorage.setItem('list-timer-app', JSON.stringify(newList));
 
-    return newList;
+  return newList;
 }
 
 /**
@@ -40,23 +40,23 @@ export const updateTaskInList = (currentList: string, prevLists: List[], updated
  * @returns The updated Lists state.
  */
 export const addTaskToList = (currentList: string, prevLists: List[], newTask: Task): List[] => {
-    const newLists = prevLists.map((list: List) => {
-        if (list.id === currentList) {
-            return {
-                ...list,
-                tasks: [
-                    ...list.tasks,
-                    newTask,
-                ],
-            };
-        }
-        return list;
-    });
+  const newLists = prevLists.map((list: List) => {
+    if (list.id === currentList) {
+      return {
+        ...list,
+        tasks: [
+          ...list.tasks,
+          newTask,
+        ],
+      };
+    }
+    return list;
+  });
 
-    // Update the local storage.
-    localStorage.setItem('list-timer-app', JSON.stringify(newLists));
+  // Update the local storage.
+  localStorage.setItem('list-timer-app', JSON.stringify(newLists));
 
-    return newLists;
+  return newLists;
 }
 
 /**
@@ -67,22 +67,22 @@ export const addTaskToList = (currentList: string, prevLists: List[], newTask: T
  * @returns The updated Lists state.
  */
 export const deleteTaskFromList = (currentList: string, prevLists: List[], taskId: string): List[] => {
-    const newLists = prevLists.map((list: List) => {
-        if (list.id === currentList) {
-            return {
-                ...list,
-                tasks: list.tasks.filter((task: Task) => {
-                    return task.id !== taskId;
-                }),
-            };
-        }
-        return list;
-    });
+  const newLists = prevLists.map((list: List) => {
+    if (list.id === currentList) {
+      return {
+        ...list,
+        tasks: list.tasks.filter((task: Task) => {
+          return task.id !== taskId;
+        }),
+      };
+    }
+    return list;
+  });
 
-    // Update the local storage.
-    localStorage.setItem('list-timer-app', JSON.stringify(newLists));
+  // Update the local storage.
+  localStorage.setItem('list-timer-app', JSON.stringify(newLists));
 
-    return newLists;
+  return newLists;
 }
 
 /**
@@ -92,22 +92,22 @@ export const deleteTaskFromList = (currentList: string, prevLists: List[], taskI
  * @returns The updated Lists state.
  */
 export const deleteCompletedTasks = (currentList: string, prevLists: List[]): List[] => {
-    const newLists = prevLists.map((list: List) => {
-        if (list.id === currentList) {
-            return {
-                ...list,
-                tasks: list.tasks.filter((task: Task) => {
-                    return task.completed === false;
-                }),
-            };
-        }
-        return list;
-    });
+  const newLists = prevLists.map((list: List) => {
+    if (list.id === currentList) {
+      return {
+        ...list,
+        tasks: list.tasks.filter((task: Task) => {
+          return task.completed === false;
+        }),
+      };
+    }
+    return list;
+  });
 
-    // Update the local storage.
-    localStorage.setItem('list-timer-app', JSON.stringify(newLists));
+  // Update the local storage.
+  localStorage.setItem('list-timer-app', JSON.stringify(newLists));
 
-    return newLists;
+  return newLists;
 }
 
 /**
@@ -119,27 +119,27 @@ export const deleteCompletedTasks = (currentList: string, prevLists: List[]): Li
  * @returns The updated Lists state.
  */
 export const updateTaskTimerInList = (currentList: string, prevLists: List[], taskId: string, time: number): List[] => {
-    const newLists = prevLists.map((list: List) => {
-        if (list.id === currentList) {
+  const newLists = prevLists.map((list: List) => {
+    if (list.id === currentList) {
+      return {
+        ...list,
+        tasks: list.tasks.map((task: Task) => {
+          if (task.id === taskId) {
             return {
-                ...list,
-                tasks: list.tasks.map((task: Task) => {
-                    if (task.id === taskId) {
-                        return {
-                            ...task,
-                            timer: time,
-                            displayTime: convertSecondsToDisplayTime(time),
-                        };
-                    }
-                    return task;
-                }),
+              ...task,
+              timer: time,
+              displayTime: convertSecondsToDisplayTime(time),
             };
-        }
-        return list;
-    });
+          }
+          return task;
+        }),
+      };
+    }
+    return list;
+  });
 
-    // Update the local storage.
-    localStorage.setItem('list-timer-app', JSON.stringify(newLists));
+  // Update the local storage.
+  localStorage.setItem('list-timer-app', JSON.stringify(newLists));
 
-    return newLists;
+  return newLists;
 }
