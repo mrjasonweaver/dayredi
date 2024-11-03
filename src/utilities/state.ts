@@ -8,7 +8,11 @@ import { convertSecondsToDisplayTime } from './timeUtils';
  * @param updatedTask The updated task.
  * @returns The updated Lists state.
  */
-export const updateTaskInList = (currentList: string, prevLists: List[], updatedTask: Task): List[] => {
+export const updateTaskInList = (
+  currentList: string,
+  prevLists: List[],
+  updatedTask: Task
+): List[] => {
 
   // Update the currentList's tasks with the updated task.
   const newList = prevLists.map((list: List) => {
@@ -39,7 +43,11 @@ export const updateTaskInList = (currentList: string, prevLists: List[], updated
  * @param newTask The new task.
  * @returns The updated Lists state.
  */
-export const addTaskToList = (currentList: string, prevLists: List[], newTask: Task): List[] => {
+export const addTaskToList = (
+  currentList: string,
+  prevLists: List[],
+  newTask: Task
+): List[] => {
   const newLists = prevLists.map((list: List) => {
     if (list.id === currentList) {
       return {
@@ -66,7 +74,11 @@ export const addTaskToList = (currentList: string, prevLists: List[], newTask: T
  * @param taskId The task id.
  * @returns The updated Lists state.
  */
-export const deleteTaskFromList = (currentList: string, prevLists: List[], taskId: string): List[] => {
+export const deleteTaskFromList = (
+  currentList: string,
+  prevLists: List[],
+  taskId: string
+): List[] => {
   const newLists = prevLists.map((list: List) => {
     if (list.id === currentList) {
       return {
@@ -91,7 +103,10 @@ export const deleteTaskFromList = (currentList: string, prevLists: List[], taskI
  * @param prevLists The previous Lists state.
  * @returns The updated Lists state.
  */
-export const deleteCompletedTasks = (currentList: string, prevLists: List[]): List[] => {
+export const deleteCompletedTasks = (
+  currentList: string,
+  prevLists: List[]
+): List[] => {
   const newLists = prevLists.map((list: List) => {
     if (list.id === currentList) {
       return {
@@ -118,7 +133,12 @@ export const deleteCompletedTasks = (currentList: string, prevLists: List[]): Li
  * @param time The time to update.
  * @returns The updated Lists state.
  */
-export const updateTaskTimerInList = (currentList: string, prevLists: List[], taskId: string, time: number): List[] => {
+export const updateTaskTimerInList = (
+  currentList: string,
+  prevLists: List[],
+  taskId: string,
+  time: number
+): List[] => {
   const newLists = prevLists.map((list: List) => {
     if (list.id === currentList) {
       return {
