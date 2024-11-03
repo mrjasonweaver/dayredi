@@ -8,11 +8,11 @@ import { convertSecondsToDisplayTime } from './timeUtils';
  * @param updatedTask The updated task.
  * @returns The updated Lists state.
  */
-export const updateTaskInList = (
+export function updateTaskInList(
   currentList: string,
   prevLists: List[],
   updatedTask: Task
-): List[] => {
+): List[] {
 
   // Update the currentList's tasks with the updated task.
   const newList = prevLists.map((list: List) => {
@@ -43,11 +43,11 @@ export const updateTaskInList = (
  * @param newTask The new task.
  * @returns The updated Lists state.
  */
-export const addTaskToList = (
+export function addTaskToList(
   currentList: string,
   prevLists: List[],
   newTask: Task
-): List[] => {
+): List[] {
   const newLists = prevLists.map((list: List) => {
     if (list.id === currentList) {
       return {
@@ -74,11 +74,11 @@ export const addTaskToList = (
  * @param taskId The task id.
  * @returns The updated Lists state.
  */
-export const deleteTaskFromList = (
+export function deleteTaskFromList(
   currentList: string,
   prevLists: List[],
   taskId: string
-): List[] => {
+): List[] {
   const newLists = prevLists.map((list: List) => {
     if (list.id === currentList) {
       return {
@@ -103,10 +103,10 @@ export const deleteTaskFromList = (
  * @param prevLists The previous Lists state.
  * @returns The updated Lists state.
  */
-export const deleteCompletedTasks = (
+export function deleteCompletedTasks(
   currentList: string,
   prevLists: List[]
-): List[] => {
+): List[] {
   const newLists = prevLists.map((list: List) => {
     if (list.id === currentList) {
       return {
@@ -133,12 +133,12 @@ export const deleteCompletedTasks = (
  * @param time The time to update.
  * @returns The updated Lists state.
  */
-export const updateTaskTimerInList = (
+export function updateTaskTimerInList(
   currentList: string,
   prevLists: List[],
   taskId: string,
   time: number
-): List[] => {
+): List[] {
   const newLists = prevLists.map((list: List) => {
     if (list.id === currentList) {
       return {
