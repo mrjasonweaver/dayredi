@@ -4,7 +4,7 @@
  * @param timeInSeconds The time in seconds.
  * @returns string The time in hours, minutes and seconds.
  */
-const convertSecondsToDisplayTime = (timeInSeconds: number): string => {
+function convertSecondsToDisplayTime(timeInSeconds: number): string {
   const oneMinuteInSeconds = 60;
   const oneHourInSeconds = 3600;
   const doubleDigit = 10;
